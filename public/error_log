@@ -1,0 +1,5 @@
+[20-Apr-2020 23:03:01 UTC] PHP Parse error:  syntax error, unexpected '.', expecting '&' or variable (T_VARIABLE) in /home/quickpayprojectc/public_html/vendor/symfony/var-dumper/Resources/functions/dump.php on line 18
+[20-Apr-2020 23:03:39 UTC] PHP Parse error:  syntax error, unexpected '.', expecting '&' or variable (T_VARIABLE) in /home/quickpayprojectc/public_html/vendor/symfony/var-dumper/Resources/functions/dump.php on line 18
+[20-Apr-2020 23:05:11 UTC] PHP Parse error:  syntax error, unexpected '.', expecting '&' or variable (T_VARIABLE) in /home/quickpayprojectc/public_html/vendor/symfony/var-dumper/Resources/functions/dump.php on line 18
+[20-Apr-2020 23:08:56 UTC] PHP Parse error:  syntax error, unexpected '.', expecting '&' or variable (T_VARIABLE) in /home/quickpayprojectc/public_html/vendor/symfony/var-dumper/Resources/functions/dump.php on line 18
+[20-Apr-2020 23:15:23 UTC] PHP Parse error:  syntax error, unexpected '.', expecting '&' or variable (T_VARIABLE) in /home/quickpayprojectc/public_html/vendor/symfony/var-dumper/Resources/functions/dump.php on line 18

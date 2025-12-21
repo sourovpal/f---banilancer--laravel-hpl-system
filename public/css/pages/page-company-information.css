@@ -1,0 +1,8 @@
+.avatar-status{
+    width: 105px !important;
+    margin-bottom: 10px;
+}
+
+.avatar-status h6{
+    color: lightseagreen !important;
+}

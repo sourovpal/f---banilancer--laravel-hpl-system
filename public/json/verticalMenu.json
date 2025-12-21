@@ -1,0 +1,242 @@
+{
+  "menu": [
+    {
+      "url": "analytics",
+      "name": "Dashboard",
+      "i18n": "Dashboard",
+      "class": "waves-effect waves-cyan",
+      "icon": "settings_input_svideo",
+      "slug": "dashboard"
+    },
+    {
+      "url": "javascript:void(0)",
+      "name": "Sales Order",
+      "i18n": "Sales Order",
+      "class": "collapsible-header waves-effect waves-cyan",
+      "slug": "sales-order",
+      "icon": "receipt",
+      "submenu": [
+        {
+          "url": "current-sales-order-list",
+          "name": "Current Sales Order List",
+          "i18n": "Current Sales Order List",
+          "slug": "current-sales-order-list"
+        },
+        {
+          "url": "create-sales-order-record",
+          "name": "Create Sales Order Record",
+          "i18n": "Create Sales Order Record",
+          "slug": "create-sales-order-record"
+        },
+        {
+          "url": "sales-order-report",
+          "name": "Sales Order Report",
+          "i18n": "Sales Order Report",
+          "slug": "sales-order-report"
+        }
+      ]
+    },
+    {
+      "url": "javascript:void(0)",
+      "name": "Delivery Note",
+      "i18n": "Delivery Note",
+      "class": "collapsible-header waves-effect waves-cyan",
+      "slug": "delivery-note",
+      "icon": "receipt",
+      "submenu": [
+        {
+          "url": "current-delivery-note-list",
+          "name": "Current Delivery Note List",
+          "i18n": "Current Delivery Note List",
+          "slug": "current-delivery-note-list"
+        },
+        {
+          "url": "create-delivery-note-record",
+          "name": "Create Delivery Note record",
+          "i18n": "Create Delivery Note record",
+          "slug": "create-delivery-note-record"
+        },
+        {
+          "url": "delivery-note-report",
+          "name": "Delivery Note Report",
+          "i18n": "Delivery Note Report",
+          "slug": "delivery-note-report"
+        }
+      ]
+    },
+    {
+      "url": "javascript:void(0)",
+      "name": "Purchase Order",
+      "i18n": "Purchase Order",
+      "class": "collapsible-header waves-effect waves-cyan",
+      "slug": "purchase-order",
+      "icon": "receipt",
+      "submenu": [
+        {
+          "url": "current-purchase-order-list",
+          "name": "Current Purchase Order List",
+          "i18n": "Current Purchase Order List",
+          "slug": "current-purchase-order-list"
+        },
+        {
+          "url": "create-purchase-order-record",
+          "name": "Create Purchase Order Record",
+          "i18n": "Create Purchase Order Record",
+          "slug": "create-purchase-order-record"
+        },
+        {
+          "url": "purchase-order-report",
+          "name": "Purchase Order Report",
+          "i18n": "Purchase Order Report",
+          "slug": "purchase-order-report"
+        }
+      ]
+    },
+    {
+      "url": "javascript:void(0)",
+      "name": "Good Receive",
+      "i18n": "Good Receive",
+      "class": "collapsible-header waves-effect waves-cyan",
+      "slug": "good-receive",
+      "icon": "receipt",
+      "submenu": [
+        {
+          "url": "current-good-receive-list",
+          "name": "Current Good Receive List",
+          "i18n": "Current Good Receive List",
+          "slug": "current-good-receive-list"
+        },
+        {
+          "url": "create-good-receive-record",
+          "name": "Create Good Receive Record",
+          "i18n": "Create Good Receive Record",
+          "slug": "create-good-receive-record"
+        },
+        {
+          "url": "good-receive-report",
+          "name": "Good Receive Report",
+          "i18n": "Good Receive Report",
+          "slug": "good-receive-report"
+        }
+      ]
+    },
+    {
+      "url": "javascript:void(0)",
+      "name": "Category & Item",
+      "i18n": "Category & Item",
+      "class": "collapsible-header waves-effect waves-cyan",
+      "slug": "category-item",
+      "icon": "receipt",
+      "submenu": [
+        {
+          "url": "category-list",
+          "name": "Category List",
+          "i18n": "Category List",
+          "slug": "category-list"
+        },
+        {
+          "url": "create-category-record",
+          "name": "Create Category Record",
+          "i18n": "Create Category Record",
+          "slug": "create-category-record"
+        },
+        {
+          "url": "item-list",
+          "name": "Item List",
+          "i18n": "Item List",
+          "slug": "item-list"
+        },
+        {
+          "url": "create-item-record",
+          "name": "Create Item Record",
+          "i18n": "Create Item Record",
+          "slug": "create-item-record"
+        },
+        {
+          "url": "item-transaction-report",
+          "name": "Item Transaction Report",
+          "i18n": "Item Transaction Report",
+          "slug": "item-transaction-report"
+        }
+      ]
+    },
+    {
+      "url": "javascript:void(0)",
+      "name": "Supplier",
+      "i18n": "Supplier",
+      "class": "collapsible-header waves-effect waves-cyan",
+      "slug": "supplier",
+      "icon": "receipt",
+      "submenu": [
+        {
+          "url": "supplier-list",
+          "name": "Supplier List",
+          "i18n": "Supplier List",
+          "slug": "supplier-list"
+        },
+        {
+          "url": "create-supplier-record",
+          "name": "Create Supplier Record",
+          "i18n": "Create Supplier Record",
+          "slug": "create-supplier-record"
+        }
+      ]
+    },
+    {
+      "url": "javascript:void(0)",
+      "name": "Quotation",
+      "i18n": "Quotation",
+      "class": "collapsible-header waves-effect waves-cyan",
+      "slug": "quotation",
+      "icon": "receipt",
+      "submenu": [
+        {
+          "url": "current-quotation-list",
+          "name": "Current Quotation List",
+          "i18n": "Current Quotation List",
+          "slug": "current-quotation-list"
+        },
+        {
+          "url": "create-quotation-record",
+          "name": "Create Quotation Record",
+          "i18n": "Create Quotation Record",
+          "slug": "create-quotation-record"
+        },
+        {
+          "url": "quotation-report",
+          "name": "Quotation Report",
+          "i18n": "Quotation Report",
+          "slug": "quotation-report"
+        }
+      ]
+    },
+    {
+      "url": "javascript:void(0)",
+      "name": "Administration",
+      "i18n": "Administration",
+      "class": "collapsible-header waves-effect waves-cyan",
+      "slug": "administration",
+      "icon": "face",
+      "submenu": [
+        {
+          "url": "page-users-list",
+          "name": "User List",
+          "i18n": "User List",
+          "slug": "users-list"
+        },
+        {
+          "url": "page-users-create",
+          "name": "Create User Record",
+          "i18n": "Create User Record",
+          "slug": "create-user-record"
+        },
+        {
+          "url": "page-users-edit",
+          "name": "Update User Record",
+          "i18n": "Update User Record",
+          "slug": "update-user-record"
+        }
+      ]
+    }
+  ]
+}

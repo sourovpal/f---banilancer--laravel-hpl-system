@@ -1,0 +1,91 @@
+td, th{
+    text-align: center !important;
+}
+
+td{
+    padding: 1.2rem 0.6rem !important;
+}
+
+.item_image{
+    width: 45px;
+}
+
+.material-icons{
+    margin-left: 5px;
+    margin-top: -3px;
+}
+
+.nested_table_hide i{
+    color: red !important;
+}
+
+.sales_order_deliver{
+    color: green;
+}
+
+.sales_order_approve{
+    color: blue;
+}
+
+.staff_wrap label{
+    margin-top: 75px;
+}
+
+.add_item i{
+    margin-top: 0;
+}
+
+.modal_item{
+    margin-top: 90px !important;
+}
+
+#main {
+    min-height: calc(100% - 75px);
+}
+
+#cc_error{
+    color: #ff5a92;
+}
+
+.avatar-status{
+    width: 105px !important;
+    margin-bottom: 10px;
+}
+
+.avatar-status h6{
+    color: lightseagreen !important;
+}
+
+#add_item_modal #modal_item_filter, #confirm_modal #modal_item_filter{
+    display: none !important;
+}
+
+.data_row{
+    cursor: pointer;
+}
+
+.data_row:hover{
+    background-color: lightgrey;
+}
+
+#approve_modal, #confirm_modal{
+    width: 36% !important;
+    height: 160px !important;
+    border-radius: 10px;
+}
+
+#confirm_modal .modal-content, #approve_modal .modal-content{
+    height: inherit !important;
+}
+
+.table_input{
+    text-align: center;
+    border: none;
+    width: 40% !important;
+}
+
+.table_input_cost{
+    text-align: center;
+    border: none;
+    width: 40% !important;
+}
