@@ -68,7 +68,7 @@
                   </div>
                 </div>
                 <div class="input-field col s12">
-                  <textarea id="ccomment0" name="ccomment0" class="materialize-textarea validate" required></textarea>
+                  <input id="ccomment0" name="ccomment0" class="materialize-textarea validate" required />
                   <label for="ccomment0">Your comment *</label>
                 </div>
                 <div class="col s12">
@@ -172,8 +172,8 @@
                   </div>
                 </div>
                 <div class="input-field col s12">
-                  <textarea id="ccomment" name="ccomment" class="materialize-textarea validate"
-                    data-error=".errorTxt7"></textarea>
+                  <input id="ccomment" name="ccomment" class="materialize-textarea validate"
+                    data-error=".errorTxt7" />
                   <label for="ccomment">Your comment *</label>
                   <small class="errorTxt7"></small>
                 </div>

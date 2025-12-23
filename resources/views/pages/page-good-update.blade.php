@@ -155,7 +155,7 @@
           <div class="media display-flex align-items-center">
             <span class="card-title">Good Receice Remarks:</span>
           </div>
-          <textarea id="textarea2" class="materialize-textarea">{{ $gr['remarks'] }}</textarea>
+          <input id="textarea2" class="materialize-textarea" value="{{ $gr['remarks'] }}" />
           <div class="action_wrap mt-2 text-right">
             <button type="submit" class="btn indigo mr-2" id="update_gr">
               Update</button>

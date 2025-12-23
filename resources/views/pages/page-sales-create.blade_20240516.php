@@ -18,8 +18,10 @@
 @endsection
 <style>
   .loader {
-    border: 8px solid #f3f3f3; /* Light grey */
-    border-top: 8px solid #1976D2; /* Blue */
+    border: 8px solid #f3f3f3;
+    /* Light grey */
+    border-top: 8px solid #1976D2;
+    /* Blue */
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -27,19 +29,26 @@
     position: fixed;
     top: 50%;
     left: 50%;
-    margin-top: -25px; /* Half of width */
-    margin-left: -25px; /* Half of height */
+    margin-top: -25px;
+    /* Half of width */
+    margin-left: -25px;
+    /* Half of height */
   }
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
   }
 
   .model-loading {
-    filter: blur(30px); /* Adjust the blur value for the loading state */
+    filter: blur(30px);
+    /* Adjust the blur value for the loading state */
   }
-
 </style>
 {{-- page content --}}
 @section('content')
@@ -78,13 +87,13 @@
               <select id="costcentre" name="costcentre">
                 <option value="0">Select Cost Centre</option>
                 @foreach($costcenters as $costcenter)
-                  <option value="{{ $costcenter -> id }}">{{ $costcenter -> code }}</option>
+                <option value="{{ $costcenter -> id }}">{{ $costcenter -> code }}</option>
                 @endforeach
               </select>
               <label>Cost Centre:</label>
             </div>
-            
-			
+
+
           </div>
         </div>
       </div>
@@ -103,7 +112,7 @@
                     <select class="category" id="category">
                       <option value="0">All Categories</option>
                       @foreach($categories as $category)
-                        <option value="{{ $category -> id }}">{{ $category -> name }}</option>
+                      <option value="{{ $category -> id }}">{{ $category -> name }}</option>
                       @endforeach
                     </select>
                   </div>
@@ -139,7 +148,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    
+
                   </tbody>
                 </table>
               </div>
@@ -166,25 +175,25 @@
                 </tr>
               </thead>
               <tbody>
-                
+
               </tbody>
             </table>
           </div>
           <!-- datatable ends -->
         </div>
       </div>
-      
-	  
-	  
-	  
+
+
+
+
       <div class="card">
         <div class="card-content">
           <div class="media display-flex align-items-center">
             <span class="card-title">Sales Order Remarks:</span>
           </div>
-          <textarea id="remarks" name="remarks" class="materialize-textarea"></textarea>
+          <input id="remarks" name="remarks" class="materialize-textarea" />
           <div class="action_wrap mt-2 text-right">
-		  <!--
+            <!--
 		  <div class="col s12 m4">
               <select id="approver" name="approver">
                 <option value="0">Select Approver</option>
@@ -209,12 +218,12 @@
   <div class="modal-content">
     <p style="color: black !important;">Are you sure that you will delete this item?</p>
     <div class="row mt-5">
-        <input type="hidden" id="item_id_cancel">
-        <div class="col s2"></div>
-        <div class="col s3"><button class="btn btn-success" id="yes_btn">Yes</button></div>
-        <div class="col s2"></div>
-        <div class="col s3"><button class="btn btn-danger modal-action modal-close" id="cancel_btn" data-dismiss="modal">Cancel</button></div>
-        <div class="col s2"></div>
+      <input type="hidden" id="item_id_cancel">
+      <div class="col s2"></div>
+      <div class="col s3"><button class="btn btn-success" id="yes_btn">Yes</button></div>
+      <div class="col s2"></div>
+      <div class="col s3"><button class="btn btn-danger modal-action modal-close" id="cancel_btn" data-dismiss="modal">Cancel</button></div>
+      <div class="col s2"></div>
     </div>
   </div>
   <!--<div class="modal-footer">-->
@@ -236,40 +245,37 @@
 <!-- <script src="{{asset('js/scripts/page-users.js')}}"></script> -->
 <script src="{{asset('js/scripts/page-sales.js')}}"></script>
 <script>
-    if ('{{ Auth::user() -> role }}' == 'internal') {
-       $('.sales_order_create_menu').parent().hide()
-       $('.company_menu').parent().hide()
-       if ('{{ Auth::user() -> admin_role }}' == 0) {
-           $('.administration_menu').parent().hide()
-           $('.department_menu').parent().hide()
-       }
-   }
-   if ('{{ Auth::user() -> role }}' == 'external') {
-       $('.delivery_note_menu').parent().hide()
-       $('.purchase_order_menu').parent().hide()
-       $('.good_receive_menu').parent().hide()
-       $('.category_item_menu').parent().hide()
-       $('.supplier_menu').parent().hide()
-       $('.quotation_menu').parent().hide()
-       $('.company_menu').parent().hide()
-       if ('{{ Auth::user() -> admin_role }}' == 0) {
-           $('.administration_menu').parent().hide()
-           $('.department_menu').parent().hide()
-       }
-else{
-$('.administration_menu').parent().find('.collapsible-sub li:first-child').hide();
-$('.administration_menu').parent().find('.collapsible-sub li:nth-child(2)').hide();
-}
-   }
+  if ('{{ Auth::user() -> role }}' == 'internal') {
+    $('.sales_order_create_menu').parent().hide()
+    $('.company_menu').parent().hide()
+    if ('{{ Auth::user() -> admin_role }}' == 0) {
+      $('.administration_menu').parent().hide()
+      $('.department_menu').parent().hide()
+    }
+  }
+  if ('{{ Auth::user() -> role }}' == 'external') {
+    $('.delivery_note_menu').parent().hide()
+    $('.purchase_order_menu').parent().hide()
+    $('.good_receive_menu').parent().hide()
+    $('.category_item_menu').parent().hide()
+    $('.supplier_menu').parent().hide()
+    $('.quotation_menu').parent().hide()
+    $('.company_menu').parent().hide()
+    if ('{{ Auth::user() -> admin_role }}' == 0) {
+      $('.administration_menu').parent().hide()
+      $('.department_menu').parent().hide()
+    } else {
+      $('.administration_menu').parent().find('.collapsible-sub li:first-child').hide();
+      $('.administration_menu').parent().find('.collapsible-sub li:nth-child(2)').hide();
+    }
+  }
 
-function removePrice () {
-  @if(auth() -> user() -> role == 'external')
-  $("tr.item_row").each(function() {
-    $(this).children("td:eq(5)").remove();
-  });
-  @endif
-}
-
-
+  function removePrice() {
+    @if(auth() - > user() - > role == 'external')
+    $("tr.item_row").each(function() {
+      $(this).children("td:eq(5)").remove();
+    });
+    @endif
+  }
 </script>
 @endsection

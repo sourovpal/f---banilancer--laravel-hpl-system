@@ -238,7 +238,7 @@
                         <div class="media display-flex align-items-center">
                             <span class="card-title">Sales Order Remarks:</span>
                         </div>
-                        <textarea id="remarks" name="remarks" class="materialize-textarea">{{ $salesorder['remarks'] }}</textarea>
+                        <input id="remarks" name="remarks" class="materialize-textarea" value="{{ $salesorder['remarks'] }}" />
                         <div class="action_wrap mt-2 text-right">
                             <button type="button" class="btn indigo mr-2" id="save_all">Update</button>
                             <button type="button" onclick='window.location.href="{{ url()->previous() }}"'

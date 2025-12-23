@@ -455,7 +455,7 @@
       <!-- form start -->
       <form class="edit-todo-item mt-10 mb-10">
         <div class="input-field">
-          <textarea class="edit-todo-item-title materialize-textarea" id="edit-item-form"></textarea>
+          <input class="edit-todo-item-title materialize-textarea" id="edit-item-form" />
           <label for="edit-item-form">Write a Task Name</label>
         </div>
         <div class="input-field">

@@ -183,7 +183,7 @@
       <div class="media display-flex align-items-center">
         <span class="card-title">Sales Order Remarks:</span>
       </div>
-      <textarea id="textarea2" class="materialize-textarea"></textarea>
+      <input id="textarea2" class="materialize-textarea" />
       <div class="row mt-2">
         <div class="col s12 m6">
           <h6>Sign Image: </h6>

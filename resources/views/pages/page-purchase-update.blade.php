@@ -210,11 +210,11 @@
                         <div class="media display-flex align-items-center">
                             <span class="card-title">Purchase Order Remarks:</span>
                         </div>
-                        <textarea id="remarks" name="remarks" class="materialize-textarea">{{ $purchaseorder['remarks'] }}</textarea>
+                        <input id="remarks" name="remarks" class="materialize-textarea" value="{{ $purchaseorder['remarks'] }}" />
                         <div class="media display-flex align-items-center">
                             <span class="card-title">Payment Term:</span>
                         </div>
-                        <textarea id="payment_term" name="payment_term" class="materialize-textarea">{{ $purchaseorder['payment_term'] }}</textarea>
+                        <input id="payment_term" name="payment_term" class="materialize-textarea" value="{{ $purchaseorder['payment_term'] }}" />
                         <div class="action_wrap mt-2 text-right">
                             <button type="button" class="btn indigo mr-2" id="update_po">
                                 Update</button>

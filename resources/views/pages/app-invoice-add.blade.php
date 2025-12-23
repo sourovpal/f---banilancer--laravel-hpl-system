@@ -59,7 +59,7 @@
                 <input type="text" placeholder="House no.">
               </div>
               <div class="input-field">
-                <textarea class="materialize-textarea" rows="4" placeholder="Landmark / Street"></textarea>
+                <input class="materialize-textarea" rows="4" placeholder="Landmark / Street" />
               </div>
               <div class="input-field">
                 <input type="email" placeholder="City">

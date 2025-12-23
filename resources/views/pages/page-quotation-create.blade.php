@@ -117,7 +117,7 @@
                     </div>
                     <div class="row">
                         <div class="col s12 m6 input-field">
-                            <textarea id="remarks" name="remarks" class="validate materialize-textarea" data-error=".errorTxt7"></textarea>
+                            <input id="remarks" name="remarks" class="validate materialize-textarea" data-error=".errorTxt7" />
                           <label for="remarks">Remarks</label>
                           <small class="errorTxt7"></small>
                         </div>
@@ -191,7 +191,7 @@
           </div>
           <input type="hidden" name="qn_id" value="{{ $data['quotation'] }}">
           <input type="hidden" name="costcentre" id="costcentre" value="0">
-          <textarea id="remarks" name="remarks" class="materialize-textarea"></textarea>
+          <input id="remarks" name="remarks" class="materialize-textarea" />
           <div class="action_wrap mt-2 text-right">
             <button type="button" id="quotation_create_btn" class="btn mr-2">
               Next</button>

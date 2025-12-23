@@ -114,7 +114,7 @@
                 <label for="budget">App budget</label>
               </div>
               <div class="input-field col s12 width-100">
-                <textarea id="textarea1" class="materialize-textarea"></textarea>
+                <input id="textarea1" class="materialize-textarea" />
                 <label for="textarea1">Textarea</label>
                 <a class="waves-effect waves-light btn">Send</a>
               </div>

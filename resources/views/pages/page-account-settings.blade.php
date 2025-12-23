@@ -175,8 +175,8 @@
             <div class="row">
               <div class="col s12">
                 <div class="input-field">
-                  <textarea class="materialize-textarea" id="accountTextarea" name="accountTextarea"
-                    placeholder="Your Bio data here..."></textarea>
+                  <input class="materialize-textarea" id="accountTextarea" name="accountTextarea"
+                    placeholder="Your Bio data here..." />
                   <label for="accountTextarea">Bio</label>
                 </div>
               </div>

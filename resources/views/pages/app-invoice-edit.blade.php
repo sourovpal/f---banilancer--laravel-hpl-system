@@ -58,8 +58,8 @@
                 <input type="text" value="Clevision PVT. LTD.">
               </div>
               <div class="input-field">
-                <textarea class="materialize-textarea" rows="4"
-                  placeholder="Enter your address">9205 Whitemarsh Street New York, NY 10002</textarea>
+                <input class="materialize-textarea" rows="4"
+                  placeholder="Enter your address" value="9205 Whitemarsh Street New York, NY 10002" />
               </div>
               <div class="input-field">
                 <input type="email" value="hello@clevision.net">

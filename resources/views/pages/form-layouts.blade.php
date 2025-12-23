@@ -48,7 +48,7 @@
             </div>
             <div class="row">
               <div class="input-field col s12">
-                <textarea id="message" class="materialize-textarea"></textarea>
+                <input id="message" class="materialize-textarea" />
                 <label for="message">Message</label>
               </div>
               <div class="row">
@@ -90,8 +90,8 @@
             </div>
             <div class="row">
               <div class="input-field col s12">
-                <textarea placeholder="Oh WoW! Let me check this one too." id="message2"
-                  class="materialize-textarea"></textarea>
+                <input placeholder="Oh WoW! Let me check this one too." id="message2"
+                  class="materialize-textarea" />
                 <label for="message">Message</label>
               </div>
               <div class="row">
@@ -137,7 +137,7 @@
             <div class="row">
               <div class="input-field col s12">
                 <i class="material-icons prefix">question_answer</i>
-                <textarea id="message3" class="materialize-textarea"></textarea>
+                <input id="message3" class="materialize-textarea" />
                 <label for="message3">Message</label>
               </div>
               <div class="row">
@@ -183,7 +183,7 @@
             <div class="row">
               <div class="input-field col s12">
                 <i class="material-icons prefix">question_answer</i>
-                <textarea id="message4" class="materialize-textarea validate"></textarea>
+                <input id="message4" class="materialize-textarea validate" />
                 <label for="message4">Message</label>
               </div>
               <div class="row">
@@ -319,7 +319,7 @@
             </div>
             <div class="row">
               <div class="input-field col s12">
-                <textarea id="message5" class="materialize-textarea"></textarea>
+                <input id="message5" class="materialize-textarea" />
                 <label for="message">Message</label>
               </div>
               <div class="row">

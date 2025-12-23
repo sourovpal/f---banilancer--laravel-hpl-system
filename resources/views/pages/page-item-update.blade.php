@@ -114,7 +114,7 @@
               <div class="col s12">
                 <label for="itemspecification">Item Specification</label>
                 <small class="errorTxt9"></small>
-                <textarea id="itemspecification" name="itemspecification" class="materialize-textarea validate">{{ $item -> specification }}</textarea>
+                <input id="itemspecification" name="itemspecification" class="materialize-textarea validate" value="{{ $item -> specification }}" />
               </div>
               <div class="col s12 display-flex justify-content-end mt-3">
                 <button type="submit" class="btn">

@@ -112,7 +112,7 @@
                   </div>
                   <div class="input-field col m6 s12">
                     <label for="desc">Short Description: <span class="red-text">*</span></label>
-                    <textarea name="dec" id="desc" rows="4" class="materialize-textarea"></textarea>
+                    <input name="dec" id="desc" rows="4" class="materialize-textarea" />
                   </div>
                 </div>
                 <div class="step-actions">
@@ -298,7 +298,7 @@
                   </div>
                   <div class="input-field col m6 s12">
                     <label for="desc1">Short Description: <span class="red-text">*</span></label>
-                    <textarea name="desc" id="desc1" rows="4" class="materialize-textarea"></textarea>
+                    <input name="desc" id="desc1" rows="4" class="materialize-textarea" />
                   </div>
                 </div>
                 <div class="step-actions">
@@ -487,7 +487,7 @@
                   </div>
                   <div class="input-field col m6 s12">
                     <label for="desc123">Short Description: <span class="red-text">*</span></label>
-                    <textarea name="desc" id="desc123" rows="4" class="materialize-textarea"></textarea>
+                    <input name="desc" id="desc123" rows="4" class="materialize-textarea" />
                   </div>
                 </div>
                 <div class="step-actions">

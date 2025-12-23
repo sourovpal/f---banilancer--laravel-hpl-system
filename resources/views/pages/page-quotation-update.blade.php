@@ -150,7 +150,7 @@
                         </div>
                         <input class="" type="hidden" name="qn_id" value="{{ $data['quotation'] }}">
                         {{-- <input type="hidden" name="costcentre" id="costcentre" value="{{ $quotation['costcentre'] }}"> --}}
-                        <textarea class="disable-on-external-role" id="remarks" name="remarks" class="materialize-textarea">{{ $quotation['remarks'] }}</textarea>
+                        <input class="disable-on-external-role" id="remarks" name="remarks" class="materialize-textarea" vlaue="{{ $quotation['remarks'] }}" />
                         <div class="action_wrap mt-2 text-right">
                             @if (Auth::user() && Auth::user()->role != 'external')
                                 <button type="submit" class="btn mr-2" id="save_all">Update</button>
@@ -179,8 +179,8 @@
                         <small class="errorTxt1"></small>
                     </div>
                     <div class="col s12 input-field">
-                        <textarea id="itemspecification" name="itemspecification" class="validate materialize-textarea"
-                            data-error=".errorTxt2"></textarea>
+                        <input id="itemspecification" name="itemspecification" class="validate materialize-textarea"
+                            data-error=".errorTxt2" />
                         <label for="itemspecification">Item Specification</label>
                         <small class="errorTxt2"></small>
                     </div>
@@ -216,7 +216,7 @@
                 </div>
                 <div class="row ">
                     <div class="col s12 input-field ">
-                        <textarea id="remarks" name="remarks" class=" validate materialize-textarea " data-error=".errorTxt7"></textarea>
+                        <input id="remarks" name="remarks" class=" validate materialize-textarea " data-error=".errorTxt7" />
                         <label for="remarks">Remarks</label>
                         <small class="errorTxt7"></small>
                     </div>

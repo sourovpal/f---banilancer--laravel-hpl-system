@@ -191,7 +191,7 @@
           <div class="media display-flex align-items-center">
             <span class="card-title">Sales Order Remarks:</span>
           </div>
-          <input id="remarks" name="remarks" class="materialize-textarea"></input>
+          <input id="remarks" name="remarks" class="materialize-textarea" />
           <div class="action_wrap mt-2 text-right">
             <button type="button" class="btn indigo mr-2" id="save_all">
               Next</button>

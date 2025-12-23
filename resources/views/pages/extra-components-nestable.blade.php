@@ -70,7 +70,7 @@
               </li>
             </ol>
           </div>
-          <textarea id="nestable-output"></textarea>
+          <input id="nestable-output" />
         </div>
       </div>
     </div>
@@ -109,7 +109,7 @@
             </li>
           </ol>
         </div>
-        <textarea id="nestable2-output"></textarea>
+        <input id="nestable2-output" />
       </div>
     </div>
   </div>

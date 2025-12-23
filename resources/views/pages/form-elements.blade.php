@@ -348,7 +348,7 @@
             <form class="col s12">
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="textarea2" class="materialize-textarea"></textarea>
+                  <input id="textarea2" class="materialize-textarea" />
                   <label for="textarea2">Textarea</label>
                 </div>
               </div>
@@ -411,7 +411,7 @@
               <div class="row">
                 <div class="input-field col s12">
                   <i class="material-icons prefix">mode_edit</i>
-                  <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
+                  <input id="icon_prefix2" class="materialize-textarea" />
                   <label for="icon_prefix2">Message</label>
                 </div>
               </div>
@@ -1377,7 +1377,7 @@ $(document).ready(function(){
                   </div>
                   <div class="row">
                     <div class="input-field col s12">
-                      <textarea id="textarea1" class="materialize-textarea" data-length="120"></textarea>
+                      <input id="textarea1" class="materialize-textarea" data-length="120" />
                       <label for="textarea1">Textarea</label>
                     </div>
                   </div>

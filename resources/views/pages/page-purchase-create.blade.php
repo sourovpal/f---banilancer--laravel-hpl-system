@@ -171,11 +171,11 @@
           <div class="media display-flex align-items-center">
             <span class="card-title">Purchase Order Remarks:</span>
           </div>
-          <textarea id="remarks" name="remarks" class="materialize-textarea">50% deposit, 50% cheque on delivery</textarea>
+          <input id="remarks" name="remarks" class="materialize-textarea" value="50% deposit, 50% cheque on delivery" />
 		  <div class="media display-flex align-items-center">
             <span class="card-title">Payment Term:</span>
           </div>
-          <textarea id="payment_term" name="payment_term" class="materialize-textarea">月結</textarea>
+          <input id="payment_term" name="payment_term" class="materialize-textarea" value="月結" />
           <div class="action_wrap mt-2 text-right">
             <button type="submit" class="btn indigo mr-2" id="create_po">
               Create</button>

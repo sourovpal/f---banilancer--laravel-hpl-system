@@ -114,7 +114,7 @@
                 <div class="col s12">
                   <label for="supplierremarks">Supplier Remarks</label>
                   <small class="errorTxt2"></small>
-                  <textarea id="supplierremarks" name="supplierremarks" class="materialize-textarea">{{ $supplier -> remarks }}</textarea>
+                  <input id="supplierremarks" name="supplierremarks" class="materialize-textarea" value="{{ $supplier -> remarks }}" />
                 </div>
                 <div class="col s12 display-flex justify-content-end mt-3">
                   <button type="submit" class="btn mr-1">

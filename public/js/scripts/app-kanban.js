@@ -156,7 +156,7 @@ $(document).ready(function () {
             formItem.setAttribute("class", "itemform");
             formItem.innerHTML =
                 '<div class="input-field">' +
-                '<textarea class="materialize-textarea add-new-item" rows="2" autofocus required></textarea>' +
+                '<input class="materialize-textarea add-new-item" rows="2" autofocus required />' +
                 "</div>" +
                 '<div class="input-field display-flex">' +
                 '<button type="submit" class="btn-floating btn-small mr-2"><i class="material-icons">add</i></button>' +
