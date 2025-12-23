@@ -91,7 +91,7 @@ class PurchaseController extends Controller
         return view('pages.page-purchase-list', compact('pageConfigs', 'breadcrumbs', 'internalCompany', 'externalCompany', 'purchaseorders'));
     }
 
-    public function purchaseorderCreate($id)
+    public function purchaseorderCreate($id = 0)
     {
         $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Purchase Order"], ['name' => "Create Purchase Order Record"]];
 
@@ -137,7 +137,7 @@ class PurchaseController extends Controller
 
         // $purchaseorder -> save();
 
-        // return redirect('/current-purchase-order-list');
+        // return redirect('/current-po');
 
         $date = date("Y-m-d");
         $purchaseorder_obj = DB::table('purchase_orders')
@@ -203,7 +203,7 @@ class PurchaseController extends Controller
         $purchaseorderitem_objs->save();
     }
 
-    public function purchaseorderReport($status)
+    public function purchaseorderReport($status = "initial")
     {
         $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Purchase Order"], ['name' => "Purchase Order Report"]];
 
@@ -257,7 +257,7 @@ class PurchaseController extends Controller
                     $purchaseorderreport->item_id = $purchaseorders_item->item_id;
                     $purchaseorderreport->user_id = $purchaseorders_item->userint_id;
                     $purchaseorderreport->rep_code = auth()->user()->id . '_' . date('Ymd');
-                    if(isset($purchaseorders_item->pi_id)){
+                    if (isset($purchaseorders_item->pi_id)) {
                         $purchaseorderreport->save();
                     }
 
@@ -339,7 +339,7 @@ class PurchaseController extends Controller
             $purchaseorderitems[$j]['id'] = $purchaseorderitem_obj->id;
             $purchaseorderitems[$j]['code'] = $purchaseorderitem_obj->code;
             $purchaseorderitems[$j]['name'] = $purchaseorderitem_obj->name;
-            $purchaseorderitems[$j]['specification'] = isset($purchaseorderitem_obj->specification) ? $purchaseorderitem_obj->specification :'';
+            $purchaseorderitems[$j]['specification'] = isset($purchaseorderitem_obj->specification) ? $purchaseorderitem_obj->specification : '';
             $purchaseorderitems[$j]['unit'] = $purchaseorderitem_obj->unit;
             $purchaseorderitems[$j]['pack'] = $purchaseorderitem_obj->pack;
             $purchaseorderitems[$j]['qty'] = $purchaseorderitem_obj->item_qty;
@@ -359,13 +359,13 @@ class PurchaseController extends Controller
         $supplier = $request->supplier;
         $payment_term = $request->payment_term;
 
-//        dd( $items ,
-//            $po_id ,
-//            $remarks ,
-//            $supplier ,
-//            $payment_term,$request->itemId,
-//            $request->qty,
-//            $request->remark);
+        //        dd( $items ,
+        //            $po_id ,
+        //            $remarks ,
+        //            $supplier ,
+        //            $payment_term,$request->itemId,
+        //            $request->qty,
+        //            $request->remark);
 
         $purchaseorder = PurchaseOrder::find($po_id);
         $purchaseorder->sup_id = $supplier;
@@ -441,7 +441,7 @@ class PurchaseController extends Controller
         $purchaseorder->userint_id = Auth::id();
         $purchaseorder->status = 0;
 
-        $podate = date('Ymd');
+        $podate = date('ymd');
         $purchaseorder->sup_id = $supplier;
         $purchaseorder->remarks = $remarks;
         $purchaseorder->payment_term = $payment_term;
@@ -456,7 +456,7 @@ class PurchaseController extends Controller
             else if ($po_id / 100 < 1) $code = '00' . $po_id;
             else if ($po_id / 1000 < 1) $code = '0' . $po_id;
             else $code = $po_id;
-            $purchaseorder->po_no = 'CS-PO-' . $podate . $code;
+            $purchaseorder->po_no = 'PO-' . $podate . $code;
             $purchaseorder->save();
 
             DB::table('purchase_order_items')->where('po_id', $po_id)->delete();
@@ -485,59 +485,59 @@ class PurchaseController extends Controller
 
     public function purchaseorderRegister(Request $request)
     {
-//        $supplier = $request->supplier;
-//        $remarks = $request->remarks;
-//        $payment_term = $request->payment_term;
-//        $po_id = $request->po_id;
-//
-//        $purchaseorder = PurchaseOrder::find($po_id);
-//
-//        $podate = date('Ymd');
-//        $code = '';
-//        if ($po_id / 10 < 1) $code = '000' . $po_id;
-//        else if ($po_id / 100 < 1) $code = '00' . $po_id;
-//        else if ($po_id / 1000 < 1) $code = '0' . $po_id;
-//        else $code = $po_id;
-//
-//        $purchaseorder->po_no = 'CS-PO-' . $podate . $code;
-//        $purchaseorder->sup_id = $supplier;
-//        $purchaseorder->remarks = $remarks;
-//        $purchaseorder->payment_term = $payment_term;
-//
-//        if ($request->has('status')) {
-//            $purchaseorder->status = $request->status;
-//        }
-//
-//        $purchaseorder->save();
-//
-//        // dd($request->itemId,$request->qty,$request->remark);
-//        if (isset($request->itemId) && count($request->itemId) > 0) {
-//            for ($i = 0; $i < count($request->itemId); $i++) {
-//                $purchaseorderitem_objs = PurchaseOrderItem::where('purchase_order_items.item_id', $request->itemId[$i])
-//                    ->where('purchase_order_items.po_id', $po_id)
-//                    ->first();
-//                if (isset($request->qty[$i])) {
-//                    $purchaseorderitem_objs->item_qty = $request->qty[$i];
-//                }
-//                if (isset($request->remark[$i])) {
-//                    $purchaseorderitem_objs->remarks = $request->remark[$i];
-//                }
-//                $purchaseorderitem_objs->save();
-//            }
-//        }
-//
-//          //if remove items
-//          if ($request->remove_po_item && isset($request->remove_po_item)) {
-//            $remove_po_items_array = explode(",", $request->remove_po_item);
-//            if (count($remove_po_items_array) > 0) {
-//                for ($i = 0; $i < count($remove_po_items_array); $i++) {
-//                    DB::table('sales_order_items')->where('item_id', $remove_po_items_array[$i])->delete();
-//                    // dd(count($remove_po_items_array),$remove_po_items_array,$request->remove_po_item);
-//                }
-//            }
-//        }
+        //        $supplier = $request->supplier;
+        //        $remarks = $request->remarks;
+        //        $payment_term = $request->payment_term;
+        //        $po_id = $request->po_id;
+        //
+        //        $purchaseorder = PurchaseOrder::find($po_id);
+        //
+        //        $podate = date('Ymd');
+        //        $code = '';
+        //        if ($po_id / 10 < 1) $code = '000' . $po_id;
+        //        else if ($po_id / 100 < 1) $code = '00' . $po_id;
+        //        else if ($po_id / 1000 < 1) $code = '0' . $po_id;
+        //        else $code = $po_id;
+        //
+        //        $purchaseorder->po_no = 'CS-PO-' . $podate . $code;
+        //        $purchaseorder->sup_id = $supplier;
+        //        $purchaseorder->remarks = $remarks;
+        //        $purchaseorder->payment_term = $payment_term;
+        //
+        //        if ($request->has('status')) {
+        //            $purchaseorder->status = $request->status;
+        //        }
+        //
+        //        $purchaseorder->save();
+        //
+        //        // dd($request->itemId,$request->qty,$request->remark);
+        //        if (isset($request->itemId) && count($request->itemId) > 0) {
+        //            for ($i = 0; $i < count($request->itemId); $i++) {
+        //                $purchaseorderitem_objs = PurchaseOrderItem::where('purchase_order_items.item_id', $request->itemId[$i])
+        //                    ->where('purchase_order_items.po_id', $po_id)
+        //                    ->first();
+        //                if (isset($request->qty[$i])) {
+        //                    $purchaseorderitem_objs->item_qty = $request->qty[$i];
+        //                }
+        //                if (isset($request->remark[$i])) {
+        //                    $purchaseorderitem_objs->remarks = $request->remark[$i];
+        //                }
+        //                $purchaseorderitem_objs->save();
+        //            }
+        //        }
+        //
+        //          //if remove items
+        //          if ($request->remove_po_item && isset($request->remove_po_item)) {
+        //            $remove_po_items_array = explode(",", $request->remove_po_item);
+        //            if (count($remove_po_items_array) > 0) {
+        //                for ($i = 0; $i < count($remove_po_items_array); $i++) {
+        //                    DB::table('sales_order_items')->where('item_id', $remove_po_items_array[$i])->delete();
+        //                    // dd(count($remove_po_items_array),$remove_po_items_array,$request->remove_po_item);
+        //                }
+        //            }
+        //        }
 
-        return redirect('/current-purchase-order-list');
+        return redirect('/current-po');
     }
 
     public function getReports(Request $request)

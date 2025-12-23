@@ -301,7 +301,7 @@ function rejectSalesorder(id) {
             id: id
         },
         success: function (data) {
-            window.location.href = "/current-sales-order-list";
+            window.location.href = "/my-order";
         },
         error: function (error) {
 
@@ -321,7 +321,7 @@ function approveSalesorder(id) {
             id: id
         },
         success: function (data) {
-            window.location.href = "/current-sales-order-list";
+            window.location.href = "/my-order";
         },
         error: function (error) {
 
@@ -399,7 +399,7 @@ function savePOItems() {
                 $("#create_po").text('Create');
                 $("#create_po").prop('disabled', false);
                 if (data['result'] == 'success') {
-                    window.location.href = "/current-purchase-order-list";
+                    window.location.href = "/current-po";
                 }
             },
             error: function (error) {
@@ -424,7 +424,7 @@ function saveGRItems() {
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            url: '/create-good-receive-record',
+            url: '/new-gr',
             method: 'post',
             dataType: 'json',
             data: {
@@ -436,7 +436,7 @@ function saveGRItems() {
                 $("#create_gr").text('Create');
                 $("#create_gr").prop('disabled', false);
                 if (data['result'] == 'success') {
-                    window.location.href = "/current-good-receive-list";
+                    window.location.href = "/current-gr";
                 }
             },
             error: function (error) {

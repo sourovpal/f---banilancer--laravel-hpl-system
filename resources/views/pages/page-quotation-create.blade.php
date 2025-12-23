@@ -2,7 +2,7 @@
 @extends('layouts.contentLayoutMaster')
 
 {{-- page title --}}
-@section('title','Create Small Order')
+@section('title','New Quotation')
 
 {{-- vendors styles --}}
 @section('vendor-style')

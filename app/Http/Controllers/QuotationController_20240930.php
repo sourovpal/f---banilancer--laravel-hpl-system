@@ -31,8 +31,8 @@ class QuotationController extends Controller
     }
 
     public function quotationList()
-	{
-		$breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Small Order"], ['name' => "Current Small Order List"]];
+    {
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Small Order"], ['name' => "Current Small Order List"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 
@@ -89,7 +89,7 @@ class QuotationController extends Controller
         $externalCompany = $this->externalcompany[0]->name;
 
         return view('pages.page-quotation-list', compact('pageConfigs', 'internalCompany', 'externalCompany', 'breadcrumbs', 'quotations'));
-	}
+    }
 
     public function quotationCreate($id)
     {
@@ -143,63 +143,63 @@ class QuotationController extends Controller
     }
 
 
-	public function createQuotationOrder_process(Request $request)
-	{
-		// 從 session 中讀取 id
-		$quotation_id = session('quotation_id', '');
+    public function createQuotationOrder_process(Request $request)
+    {
+        // 從 session 中讀取 id
+        $quotation_id = session('quotation_id', '');
 
-		if ($quotation_id != '') {
-			// 如果 session 中有 id，使用這個 id 來查詢 quotation
-			$quotation = Quotation::where('id', $quotation_id)->first();
-		} else {
-			// 如果 session 中沒有 id，使用當前用戶的最新 quotation
-			$quotation = Quotation::where('userext_id', Auth::id())
-				->whereNotNull('code')
-				->orderBy('created_at', 'desc')
-				->first();
-		}
+        if ($quotation_id != '') {
+            // 如果 session 中有 id，使用這個 id 來查詢 quotation
+            $quotation = Quotation::where('id', $quotation_id)->first();
+        } else {
+            // 如果 session 中沒有 id，使用當前用戶的最新 quotation
+            $quotation = Quotation::where('userext_id', Auth::id())
+                ->whereNotNull('code')
+                ->orderBy('created_at', 'desc')
+                ->first();
+        }
 
-		if (!$quotation) {
-			return redirect()->back()->withErrors('No quotations found for the current user.');
-		}
+        if (!$quotation) {
+            return redirect()->back()->withErrors('No quotations found for the current user.');
+        }
 
-		$current_quotation_id = $quotation->id;
-		$costcentre = Costcenter::where('id', $quotation->cc_id)->value('code');
-		$remarks = $quotation->remarks;
+        $current_quotation_id = $quotation->id;
+        $costcentre = Costcenter::where('id', $quotation->cc_id)->value('code');
+        $remarks = $quotation->remarks;
 
-		// 計算 totalAmount
-		$totalAmount = QuotationItem::where('qn_id', $current_quotation_id)->sum('price');
+        // 計算 totalAmount
+        $totalAmount = QuotationItem::where('qn_id', $current_quotation_id)->sum('price');
 
-		// 獲取當前用戶的部門ID
-		$currentUserDeptId = Auth::user()->dep_id;
+        // 獲取當前用戶的部門ID
+        $currentUserDeptId = Auth::user()->dep_id;
 
-		// 根據 totalAmount 確定 approver 的級別並檢查部門ID
-		    $approvers = User::where('appr_role', 1)
-				->orderBy('username', 'asc')
-				->get();
+        // 根據 totalAmount 確定 approver 的級別並檢查部門ID
+        $approvers = User::where('appr_role', 1)
+            ->orderBy('username', 'asc')
+            ->get();
 
-		return view('pages.page-quotation_create_process', compact('costcentre', 'remarks', 'totalAmount', 'approvers'));
-	}
+        return view('pages.page-quotation_create_process', compact('costcentre', 'remarks', 'totalAmount', 'approvers'));
+    }
 
 
-	public function QOCupdateApprover(Request $request)
-	{
-		$approverId = $request->input('approver');
+    public function QOCupdateApprover(Request $request)
+    {
+        $approverId = $request->input('approver');
 
-		// 获取当前用户最后创建的 quotation 记录的 ID
-		$lastQuotation = Quotation::where('userext_id', Auth::id())
-								  ->latest()
-								  ->first();
+        // 获取当前用户最后创建的 quotation 记录的 ID
+        $lastQuotation = Quotation::where('userext_id', Auth::id())
+            ->latest()
+            ->first();
 
-		if ($approverId !== '0' && $lastQuotation) {
-			$lastQuotation->appruser_id = $approverId;
-			$lastQuotation->save();
+        if ($approverId !== '0' && $lastQuotation) {
+            $lastQuotation->appruser_id = $approverId;
+            $lastQuotation->save();
 
-			return redirect('/current-quotation-list');
-		}
+            return redirect('/current-quotation');
+        }
 
-		return redirect()->back()->with('error', 'Invalid operation.');
-	}
+        return redirect()->back()->with('error', 'Invalid operation.');
+    }
 
     public function quotationListRender(Request $request)
     {
@@ -242,7 +242,7 @@ class QuotationController extends Controller
     public function quotationUpdate($id)
     {
 
-		session(['quotation_id' => $id]);
+        session(['quotation_id' => $id]);
 
         $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Small Order"], ['name' => "Update Small Order Record"]];
 
@@ -255,7 +255,7 @@ class QuotationController extends Controller
 
         $costcenters = Costcenter::orderBy('code', 'asc')->get();
 
-		/*
+        /*
         $quotation_obj = DB::table('quotations')
             ->leftJoin('departments', 'quotations.dep_id', '=', 'departments.id')
             ->leftJoin('costcenters', 'quotations.cc_id', '=', 'costcenters.id')
@@ -374,7 +374,7 @@ class QuotationController extends Controller
                 $department = 'Indifinite';
             } else {
                 $department_obj = Department::find($quotation_obj->dep_id);
-                if( $department_obj){
+                if ($department_obj) {
                     $department = $department_obj->name;
                 }
             }
@@ -383,21 +383,21 @@ class QuotationController extends Controller
             $externalCompany = $this->externalcompany[0]->name;
 
             return view('pages.page-quotation-update', compact('pageConfigs', 'internalCompany', 'externalCompany', 'breadcrumbs', 'quotation', 'costcenters', 'data', 'department'));
-        }else{
+        } else {
             return Redirect::back()->withErrors(['msg' => 'Quotation does not Found']);
         }
     }
 
-	public function quotationItemUpdate(Request $request)
-	{
+    public function quotationItemUpdate(Request $request)
+    {
         // dd($request->data);
-		$quotationItem = QuotationItem::where("id",$request->data["itemId"])->first();
-		$quotationItem->qty = $request->data["qty"];
-		$quotationItem->remarks = $request->data["remarks"];
-		$quotationItem->price = $request->data["price"];
-		$quotationItem->save();
-		return redirect('/create-quotation-record/' . $request->data["qn_id"]);
-	}
+        $quotationItem = QuotationItem::where("id", $request->data["itemId"])->first();
+        $quotationItem->qty = $request->data["qty"];
+        $quotationItem->remarks = $request->data["remarks"];
+        $quotationItem->price = $request->data["price"];
+        $quotationItem->save();
+        return redirect('/new-quotation/' . $request->data["qn_id"]);
+    }
 
     public function quotationReport($status)
     {
@@ -554,7 +554,7 @@ class QuotationController extends Controller
         $quotation->cc_id = $costcentre;
         $quotation->save();
 
-        return redirect('/create-quotation-record/' . $qn_id);
+        return redirect('/new-quotation/' . $qn_id);
     }
 
     public function quotationRegister(Request $request)
@@ -572,9 +572,9 @@ class QuotationController extends Controller
         $quotation->userint_id = Auth::id();
         $quotation->cc_id = $costcentre;
         $quotation->remarks = $remarks;
-        if (isset($request->itemId) && count($request->itemId) >0 ) {
-            for ($i=0; $i < count($request->itemId) ; $i++) {
-                $quotationItem = QuotationItem::where("id",$request->itemId[$i])->first();
+        if (isset($request->itemId) && count($request->itemId) > 0) {
+            for ($i = 0; $i < count($request->itemId); $i++) {
+                $quotationItem = QuotationItem::where("id", $request->itemId[$i])->first();
                 $quotationItem->qty = $request->itemqty[$i];
                 $quotationItem->remarks = $request->itemremarks[$i];
                 $quotationItem->price = $request->itemcost[$i];
@@ -587,7 +587,7 @@ class QuotationController extends Controller
         }
         $quotation->save();
 
-        return redirect('/current-quotation-list');
+        return redirect('/current-quotation');
     }
 
     public function quotationItemDelete($id)
@@ -595,7 +595,7 @@ class QuotationController extends Controller
         $quottationitem = QuotationItem::find($id);
         $qn_id = $quottationitem->qn_id;
         $quottationitem->delete();
-        return redirect('/create-quotation-record/' . $qn_id);
+        return redirect('/new-quotation/' . $qn_id);
     }
 
     public function getReports(Request $request)

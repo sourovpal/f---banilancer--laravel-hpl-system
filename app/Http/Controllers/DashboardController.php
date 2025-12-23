@@ -1,18 +1,19 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\InternalCompany;
 use App\Models\ExternalCompany;
 
 class DashboardController extends Controller
 {
-private $internalcompany;
-private $externalcompany;
+    private $internalcompany;
+    private $externalcompany;
     public function __construct()
     {
         $this->middleware(['auth']);
-$this -> internalcompany = InternalCompany::all();
-$this -> externalcompany = ExternalCompany::all();
+        $this->internalcompany = InternalCompany::all();
+        $this->externalcompany = ExternalCompany::all();
     }
 
     public function dashboardModern()
@@ -33,9 +34,9 @@ $this -> externalcompany = ExternalCompany::all();
         // navbar large
         $pageConfigs = ['navbarLarge' => false];
 
-$internalCompany = $this -> internalcompany[0] -> name;
-$externalCompany = $this -> externalcompany[0] -> name;
+        $internalCompany = $this->internalcompany[0]->name;
+        $externalCompany = $this->externalcompany[0]->name;
 
-return view('/pages/dashboard-analytics', compact('pageConfigs', 'internalCompany', 'externalCompany'));
+        return view('/pages/dashboard-analytics', compact('pageConfigs', 'internalCompany', 'externalCompany'));
     }
 }

@@ -2,7 +2,7 @@
 @extends('layouts.contentLayoutMaster')
 
 {{-- page title --}}
-@section('title','Current Sales Order List')
+@section('title','My Order')
 
 {{-- vendors styles --}}
 @section('vendor-style')

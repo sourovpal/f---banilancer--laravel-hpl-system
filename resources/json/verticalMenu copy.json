@@ -12,7 +12,7 @@
       "url": "javascript:void(0)",
       "name": "Sales Order",
       "i18n": "Sales Order",
-      "class": "collapsible-header waves-effect waves-cyan",
+      "class": "collapsible-header waves-effect waves-cyan sales_order_menu",
       "slug": "sales-order",
       "icon": "receipt",
       "submenu": [
@@ -23,13 +23,14 @@
           "slug": "current-sales-order-list"
         },
         {
-          "url": "create-sales-order-record",
+          "url": "create-sales-order-record/0",
           "name": "Create Sales Order Record",
           "i18n": "Create Sales Order Record",
-          "slug": "create-sales-order-record"
+          "slug": "create-sales-order-record",
+          "class": "sales_order_create_menu"
         },
         {
-          "url": "sales-order-report",
+          "url": "sales-order-report/initial",
           "name": "Sales Order Report",
           "i18n": "Sales Order Report",
           "slug": "sales-order-report"
@@ -40,7 +41,7 @@
       "url": "javascript:void(0)",
       "name": "Delivery Note",
       "i18n": "Delivery Note",
-      "class": "collapsible-header waves-effect waves-cyan",
+      "class": "collapsible-header waves-effect waves-cyan delivery_note_menu",
       "slug": "delivery-note",
       "icon": "receipt",
       "submenu": [
@@ -51,13 +52,7 @@
           "slug": "current-delivery-note-list"
         },
         {
-          "url": "create-delivery-note-record",
-          "name": "Create Delivery Note record",
-          "i18n": "Create Delivery Note record",
-          "slug": "create-delivery-note-record"
-        },
-        {
-          "url": "delivery-note-report",
+          "url": "delivery-note-report/initial",
           "name": "Delivery Note Report",
           "i18n": "Delivery Note Report",
           "slug": "delivery-note-report"
@@ -68,7 +63,7 @@
       "url": "javascript:void(0)",
       "name": "Purchase Order",
       "i18n": "Purchase Order",
-      "class": "collapsible-header waves-effect waves-cyan",
+      "class": "collapsible-header waves-effect waves-cyan purchase_order_menu",
       "slug": "purchase-order",
       "icon": "receipt",
       "submenu": [
@@ -79,13 +74,13 @@
           "slug": "current-purchase-order-list"
         },
         {
-          "url": "create-purchase-order-record",
-          "name": "Create Purchase Order Record",
+          "url": "create-purchase-order-record/0",
+          "name": "Create Purchase Order",
           "i18n": "Create Purchase Order Record",
           "slug": "create-purchase-order-record"
         },
         {
-          "url": "purchase-order-report",
+          "url": "purchase-order-report/initial",
           "name": "Purchase Order Report",
           "i18n": "Purchase Order Report",
           "slug": "purchase-order-report"
@@ -96,7 +91,7 @@
       "url": "javascript:void(0)",
       "name": "Good Receive",
       "i18n": "Good Receive",
-      "class": "collapsible-header waves-effect waves-cyan",
+      "class": "collapsible-header waves-effect waves-cyan good_receive_menu",
       "slug": "good-receive",
       "icon": "receipt",
       "submenu": [
@@ -107,13 +102,13 @@
           "slug": "current-good-receive-list"
         },
         {
-          "url": "create-good-receive-record",
+          "url": "create-good-receive-record/0",
           "name": "Create Good Receive Record",
           "i18n": "Create Good Receive Record",
           "slug": "create-good-receive-record"
         },
         {
-          "url": "good-receive-report",
+          "url": "good-receive-report/initial",
           "name": "Good Receive Report",
           "i18n": "Good Receive Report",
           "slug": "good-receive-report"
@@ -124,7 +119,7 @@
       "url": "javascript:void(0)",
       "name": "Category & Item",
       "i18n": "Category & Item",
-      "class": "collapsible-header waves-effect waves-cyan",
+      "class": "collapsible-header waves-effect waves-cyan category_item_menu",
       "slug": "category-item",
       "icon": "receipt",
       "submenu": [
@@ -164,7 +159,7 @@
       "url": "javascript:void(0)",
       "name": "Supplier",
       "i18n": "Supplier",
-      "class": "collapsible-header waves-effect waves-cyan",
+      "class": "collapsible-header waves-effect waves-cyan supplier_menu",
       "slug": "supplier",
       "icon": "receipt",
       "submenu": [
@@ -186,7 +181,7 @@
       "url": "javascript:void(0)",
       "name": "Quotation",
       "i18n": "Quotation",
-      "class": "collapsible-header waves-effect waves-cyan",
+      "class": "collapsible-header waves-effect waves-cyan quotation_menu",
       "slug": "quotation",
       "icon": "receipt",
       "submenu": [
@@ -197,13 +192,13 @@
           "slug": "current-quotation"
         },
         {
-          "url": "create-quotation-record",
+          "url": "create-quotation-record/0",
           "name": "Create Quotation Record",
           "i18n": "Create Quotation Record",
           "slug": "create-quotation-record"
         },
         {
-          "url": "quotation-report",
+          "url": "quotation-report/initial",
           "name": "Quotation Report",
           "i18n": "Quotation Report",
           "slug": "quotation-report"
@@ -212,29 +207,149 @@
     },
     {
       "url": "javascript:void(0)",
+      "name": "Reports",
+      "i18n": "Reports",
+      "class": "collapsible-header waves-effect waves-cyan quotation_menu",
+      "slug": "Reports",
+      "icon": "receipt",
+      "submenu": [
+        {
+          "url": "report/by-part",
+          "name": "By Part Report",
+          "i18n": "By Part Report",
+          "slug": "by-part"
+        },
+        {
+          "url": "report/sale-order",
+          "name": "Sale Order Report",
+          "i18n": "Sale Order Report",
+          "slug": "sale-order"
+        },
+        {
+          "url": "report/purchase-order",
+          "name": "Purchase Order Report",
+          "i18n": "Purchase Order Report",
+          "slug": "purchase-order"
+        },
+        {
+          "url": "report/cost-center",
+          "name": "Cost Center Report",
+          "i18n": "Cost Center Report",
+          "slug": "cost-center"
+        },
+        {
+          "url": "report/delivery-note",
+          "name": "Delivery Note Report",
+          "i18n": "Delivery Note Report",
+          "slug": "delivery-note"
+        },
+        {
+          "url": "report/good-receive",
+          "name": "Good Receive Report",
+          "i18n": "Good Receive Report",
+          "slug": "good-receive"
+        },
+        {
+          "url": "report/by-month-year",
+          "name": "Month Year Report",
+          "i18n": "Month Year Report",
+          "slug": "by-month-year"
+        },
+        {
+          "url": "report/gr_dn",
+          "name": "GR + DN",
+          "i18n": "GR + DN",
+          "slug": "gr_dn"
+        }
+      ]
+    },
+    {
+      "url": "javascript:void(0)",
+      "name": "Company Information",
+      "i18n": "Company Information",
+      "class": "collapsible-header waves-effect waves-cyan company_menu",
+      "slug": "company-information",
+      "icon": "receipt",
+      "submenu": [
+        {
+          "url": "internal-information",
+          "name": "Internal Company",
+          "i18n": "Internal Company",
+          "slug": "internal-information"
+        },
+        {
+          "url": "external-company-information",
+          "name": "External Company",
+          "i18n": "External Company",
+          "slug": "external-company-information"
+        }
+      ]
+    },
+    {
+      "url": "javascript:void(0)",
       "name": "Administration",
       "i18n": "Administration",
-      "class": "collapsible-header waves-effect waves-cyan",
+      "class": "collapsible-header waves-effect waves-cyan administration_menu",
       "slug": "administration",
       "icon": "face",
       "submenu": [
         {
-          "url": "page-users-list",
-          "name": "User List",
-          "i18n": "User List",
-          "slug": "users-list"
+          "url": "page-master-users-list",
+          "name": "Master User List",
+          "i18n": "Master User List",
+          "slug": "master-users-list"
+        },
+        {
+          "url": "page-internal-users-list",
+          "name": "Internal User List",
+          "i18n": "Internal User List",
+          "slug": "internal-users-list"
+        },
+        {
+          "url": "page-external-users-list",
+          "name": "External User List",
+          "i18n": "External User List",
+          "slug": "external-users-list"
         },
         {
           "url": "page-users-create",
           "name": "Create User Record",
           "i18n": "Create User Record",
           "slug": "create-user-record"
+        }
+      ]
+    },
+    {
+      "url": "javascript:void(0)",
+      "name": "Department",
+      "i18n": "Department",
+      "class": "collapsible-header waves-effect waves-cyan department_menu",
+      "slug": "department",
+      "icon": "receipt",
+      "submenu": [
+        {
+          "url": "department-list",
+          "name": "Department List",
+          "i18n": "Department List",
+          "slug": "department-list"
         },
         {
-          "url": "page-users-edit",
-          "name": "Update User Record",
-          "i18n": "Update User Record",
-          "slug": "update-user-record"
+          "url": "create-department-record",
+          "name": "Create Department Record",
+          "i18n": "Create Department Record",
+          "slug": "create-department-record"
+        },
+        {
+          "url": "costcenter-list",
+          "name": "Costcenter List",
+          "i18n": "Costcenter List",
+          "slug": "costcenter-list"
+        },
+        {
+          "url": "create-costcenter-record",
+          "name": "Create Costcenter Record",
+          "i18n": "Create Costcenter Record",
+          "slug": "create-costcenter-record"
         }
       ]
     }

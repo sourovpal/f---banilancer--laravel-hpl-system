@@ -2,7 +2,7 @@
 @extends('layouts.contentLayoutMaster')
 
 {{-- page title --}}
-@section('title','Item Transaction Report')
+@section('title','Item Transaction')
 
 {{-- vendors styles --}}
 @section('vendor-style')

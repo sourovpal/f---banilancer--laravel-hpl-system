@@ -23,14 +23,14 @@ use App\Models\ExternalCompany;
 
 class SalesController extends Controller
 {
-private $internalcompany;
-private $externalcompany;
+    private $internalcompany;
+    private $externalcompany;
 
     public function __construct()
     {
         $this->middleware('auth');
-$this -> internalcompany = InternalCompany::all();
-$this -> externalcompany = ExternalCompany::all();
+        $this->internalcompany = InternalCompany::all();
+        $this->externalcompany = ExternalCompany::all();
     }
 
     public function salesorderList()
@@ -42,143 +42,144 @@ $this -> externalcompany = ExternalCompany::all();
         $date = date("Y-m-d");
         $data = ['date' => $date];
 
-$internalCompany = $this -> internalcompany[0] -> name;
-$externalCompany = $this -> externalcompany[0] -> name;
+        $internalCompany = $this->internalcompany[0]->name;
+        $externalCompany = $this->externalcompany[0]->name;
 
         $salesorder_objs = DB::table('sales_orders')
-                    ->leftJoin('departments', 'sales_orders.dep_id', '=', 'departments.id')
-                    ->leftJoin('costcenters', 'sales_orders.cc_id', '=', 'costcenters.id')
-                    ->leftJoin('users as extusers', 'sales_orders.extuser_id', '=', 'extusers.id')
-                    ->leftJoin('users as approvers', 'sales_orders.appruser_id', '=', 'approvers.id')
-                    ->select('sales_orders.*', 'departments.name as department', 'costcenters.code as costcentre','costcenters.name as name_costcentre', 'extusers.username as extusername', 'approvers.username as approver')
-                    ->whereIn('sales_orders.status', [0,1,2])
-                    ->where('sales_orders.no', '!=', '')
-                    //->orWhere('sales_orders.status', 1)
-                    ->orderBy('created_at', 'DESC')
-                    ->get();
+            ->leftJoin('departments', 'sales_orders.dep_id', '=', 'departments.id')
+            ->leftJoin('costcenters', 'sales_orders.cc_id', '=', 'costcenters.id')
+            ->leftJoin('users as extusers', 'sales_orders.extuser_id', '=', 'extusers.id')
+            ->leftJoin('users as approvers', 'sales_orders.appruser_id', '=', 'approvers.id')
+            ->select('sales_orders.*', 'departments.name as department', 'costcenters.code as costcentre', 'costcenters.name as name_costcentre', 'extusers.username as extusername', 'approvers.username as approver')
+            ->whereIn('sales_orders.status', [0, 1, 2])
+            ->where('sales_orders.no', '!=', '')
+            //->orWhere('sales_orders.status', 1)
+            ->orderBy('created_at', 'DESC')
+            ->get();
 
 
         $salesorders = array();
         $i = 0;
         foreach ($salesorder_objs as $salesorder_obj) {
-            if ($salesorder_obj -> status == 0 || $salesorder_obj -> status == 1 || $salesorder_obj -> status == 2) {
-                if (auth() -> user() -> role == 'external' && auth() -> user() -> admin_role == 0 && auth() -> user() -> appr_role == 0 && auth() -> user() -> id != $salesorder_obj -> extuser_id) continue;
+            if ($salesorder_obj->status == 0 || $salesorder_obj->status == 1 || $salesorder_obj->status == 2) {
+                if (auth()->user()->role == 'external' && auth()->user()->admin_role == 0 && auth()->user()->appr_role == 0 && auth()->user()->id != $salesorder_obj->extuser_id) continue;
                 //dd($salesorder_objs->toArray());
 
-                if (auth() -> user() -> role == 'external' && auth() -> user() -> admin_role == 0 && auth() -> user() -> dep_id != $salesorder_obj -> dep_id) continue;
+                if (auth()->user()->role == 'external' && auth()->user()->admin_role == 0 && auth()->user()->dep_id != $salesorder_obj->dep_id) continue;
 
 
-                $salesorders[$i]['id'] = $salesorder_obj -> id;
-                $salesorders[$i]['no'] = $salesorder_obj -> no;
-                $salesorders[$i]['orderdate'] = $salesorder_obj -> created_at;
-                $salesorders[$i]['department'] = $salesorder_obj -> department;
-                $salesorders[$i]['costcentre'] = $salesorder_obj -> costcentre;
-                $salesorders[$i]['name_costcentre'] = $salesorder_obj -> name_costcentre;
-                $salesorders[$i]['extusername'] = $salesorder_obj -> extusername;
-                $salesorders[$i]['approver'] = $salesorder_obj -> approver;
-                $salesorders[$i]['approverdate'] = $salesorder_obj -> appr_date;
-                $salesorders[$i]['remarks'] = $salesorder_obj -> remarks;
-                $salesorders[$i]['status'] = $salesorder_obj -> status;
-                $salesorders[$i]['appruser_id'] = $salesorder_obj -> appruser_id;
-                $salesorders[$i]['dep_id'] = $salesorder_obj -> dep_id;
-                $salesorders[$i]['extuser_id'] = $salesorder_obj -> extuser_id;
+                $salesorders[$i]['id'] = $salesorder_obj->id;
+                $salesorders[$i]['no'] = $salesorder_obj->no;
+                $salesorders[$i]['orderdate'] = $salesorder_obj->created_at;
+                $salesorders[$i]['department'] = $salesorder_obj->department;
+                $salesorders[$i]['costcentre'] = $salesorder_obj->costcentre;
+                $salesorders[$i]['name_costcentre'] = $salesorder_obj->name_costcentre;
+                $salesorders[$i]['extusername'] = $salesorder_obj->extusername;
+                $salesorders[$i]['approver'] = $salesorder_obj->approver;
+                $salesorders[$i]['approverdate'] = $salesorder_obj->appr_date;
+                $salesorders[$i]['remarks'] = $salesorder_obj->remarks;
+                $salesorders[$i]['status'] = $salesorder_obj->status;
+                $salesorders[$i]['appruser_id'] = $salesorder_obj->appruser_id;
+                $salesorders[$i]['dep_id'] = $salesorder_obj->dep_id;
+                $salesorders[$i]['extuser_id'] = $salesorder_obj->extuser_id;
 
                 $salesorderitem_objs = DB::table('sales_order_items')
                     ->leftJoin('items', 'sales_order_items.item_id', '=', 'items.id')
                     ->select('sales_order_items.item_qty as item_qty', 'sales_order_items.remarks as remarks', 'items.*')
-                    ->where('sales_order_items.so_id', $salesorder_obj -> id)
+                    ->where('sales_order_items.so_id', $salesorder_obj->id)
                     ->get();
 
                 $salesorderitems = array();
                 $j = 0;
                 foreach ($salesorderitem_objs as $salesorderitem_obj) {
-                    $salesorderitems[$j]['id'] = $salesorderitem_obj -> id;
-                    $salesorderitems[$j]['code'] = $salesorderitem_obj -> code;
-                    $salesorderitems[$j]['name'] = $salesorderitem_obj -> name;
-                    $salesorderitems[$j]['specification'] = $salesorderitem_obj -> specification;
-                    $salesorderitems[$j]['unit'] = $salesorderitem_obj -> unit;
-                    $salesorderitems[$j]['pack'] = $salesorderitem_obj -> pack;
-                    $salesorderitems[$j]['qty'] = $salesorderitem_obj -> item_qty;
-                    $salesorderitems[$j]['price'] = $salesorderitem_obj -> price;
-                    $salesorderitems[$j]['remarks'] = $salesorderitem_obj -> remarks;
+                    $salesorderitems[$j]['id'] = $salesorderitem_obj->id;
+                    $salesorderitems[$j]['code'] = $salesorderitem_obj->code;
+                    $salesorderitems[$j]['name'] = $salesorderitem_obj->name;
+                    $salesorderitems[$j]['specification'] = $salesorderitem_obj->specification;
+                    $salesorderitems[$j]['unit'] = $salesorderitem_obj->unit;
+                    $salesorderitems[$j]['pack'] = $salesorderitem_obj->pack;
+                    $salesorderitems[$j]['qty'] = $salesorderitem_obj->item_qty;
+                    $salesorderitems[$j]['price'] = $salesorderitem_obj->price;
+                    $salesorderitems[$j]['remarks'] = $salesorderitem_obj->remarks;
                     $j++;
                 }
                 $salesorders[$i]['salesorderitems'] = $salesorderitems;
             }
             $i++;
         }
-       // dd($salesorders);
+        // dd($salesorders);
         return view('pages.page-sales-list', compact('pageConfigs', 'breadcrumbs', 'data', 'salesorders', 'internalCompany', 'externalCompany'));
     }
 
-    public function salesorderCreate($id)
+    public function salesorderCreate($id = 0)
     {
         $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Sales Order"], ['name' => "Create Sales Order Record"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 
-$internalCompany = $this -> internalcompany[0] -> name;
-$externalCompany = $this -> externalcompany[0] -> name;
+        $internalCompany = $this->internalcompany[0]->name;
+        $externalCompany = $this->externalcompany[0]->name;
 
         $date = date("Y-m-d");
         $department = "";
         $department_id = 0;
-        if (auth() -> user() -> role == 'external') {
-            $department_obj = Department::find(auth() -> user() -> dep_id);
-            $department = $department_obj -> name;
-            $department_id = auth() -> user() -> dep_id;
+        if (auth()->user()->role == 'external') {
+            $department_obj = Department::find(auth()->user()->dep_id);
+            $department = $department_obj->name;
+            $department_id = auth()->user()->dep_id;
         }
         // else return back();
 
-//        if (!$id) {
-//            $salesorder = new SalesOrder();
-//            $salesorder -> dep_id = $department_id;
-//            $salesorder -> dn_id = 0;
-//            $salesorder -> extuser_id = Auth::id();
-//            $salesorder -> status = 0;
-//            $salesorder -> save();
-//        }
-//        else {
-//            $salesorder = SalesOrder::find($id);
-//        }
+        //        if (!$id) {
+        //            $salesorder = new SalesOrder();
+        //            $salesorder -> dep_id = $department_id;
+        //            $salesorder -> dn_id = 0;
+        //            $salesorder -> extuser_id = Auth::id();
+        //            $salesorder -> status = 0;
+        //            $salesorder -> save();
+        //        }
+        //        else {
+        //            $salesorder = SalesOrder::find($id);
+        //        }
 
         $approvers = DB::table('users')
-                ->where('role', 'external')
-                ->where('appr_role', '!=', 0)
-                ->where('dep_id',auth() -> user() -> dep_id)
-                ->get();
+            ->where('role', 'external')
+            ->where('appr_role', '!=', 0)
+            ->where('dep_id', auth()->user()->dep_id)
+            ->get();
 
         $data = ['date' => $date, 'salesorder' => "", 'department' => $department, 'approvers' => $approvers];
-        $costcenters = Costcenter::where('dep_id',auth() -> user() -> dep_id)->orderBy('code','asc')->get();
+        $costcenters = Costcenter::where('dep_id', auth()->user()->dep_id)->orderBy('code', 'asc')->get();
         $categories = Category::all();
 
         return view('pages.page-sales-create', compact('pageConfigs', 'breadcrumbs', 'internalCompany', 'externalCompany', 'data', 'costcenters', 'categories'));
     }
 
-    public function createSalesOrder(Request $request){
-        $costcentre = $request -> costcentre;
-        $approver = $request -> approver;
-        $remarks = $request -> remarks;
+    public function createSalesOrder(Request $request)
+    {
+        $costcentre = $request->costcentre;
+        $approver = $request->approver;
+        $remarks = $request->remarks;
         $salesorder = new SalesOrder();
         $department_id = 0;
-        if (auth() -> user() -> role == 'external') {
-            $department_id = auth() -> user() -> dep_id;
+        if (auth()->user()->role == 'external') {
+            $department_id = auth()->user()->dep_id;
         }
-        $salesorder -> dep_id = $department_id;
-        $salesorder -> dn_id = 0;
-        $salesorder -> extuser_id = Auth::id();
-        $salesorder -> status = 0;
-        $nodate = date('Ymd');
-        $salesorder -> cc_id = $costcentre;
-        $salesorder -> remarks = $remarks;
-        $salesorder -> appruser_id = $approver;
-        $salesorder -> dn_id = 0;
-        $salesorder -> request_date = $request->filled('request_date') ? $request->request_date : date("Y-m-d");
+        $salesorder->dep_id = $department_id;
+        $salesorder->dn_id = 0;
+        $salesorder->extuser_id = Auth::id();
+        $salesorder->status = 0;
+        $nodate = date('ymd');
+        $salesorder->cc_id = $costcentre;
+        $salesorder->remarks = $remarks;
+        $salesorder->appruser_id = $approver;
+        $salesorder->dn_id = 0;
+        $salesorder->request_date = $request->filled('request_date') ? $request->request_date : date("Y-m-d");
         if ($request->filled('extuser_id')) {
-            $salesorder -> extuser_id = $request -> extuser_id;
+            $salesorder->extuser_id = $request->extuser_id;
         }
 
-        if ($salesorder -> save()){
+        if ($salesorder->save()) {
             $so_id = $salesorder->id;
             $code = '';
             if ($so_id / 10 < 1) $code = '000' . $so_id;
@@ -186,22 +187,22 @@ $externalCompany = $this -> externalcompany[0] -> name;
             else if ($so_id / 1000 < 1) $code = '0' . $so_id;
             else $code = $so_id;
 
-            $salesorder -> no = 'CS-SO-' . $nodate . $code;
-            $salesorder -> save();
-            $items = $request -> items;
-            $dn_id = $salesorder -> dn_id;
+            $salesorder->no = 'CS-SO-' . $nodate . $code;
+            $salesorder->save();
+            $items = $request->items;
+            $dn_id = $salesorder->dn_id;
 
             DB::table('sales_order_items')->where('so_id', $so_id)->delete();
             for ($i = 0; $i < count($items); $i++) {
                 if ($items[$i]['qty']) {
                     $salesorderitem = new SalesOrderItem();
-                    $salesorderitem -> so_id = $so_id;
-                    $salesorderitem -> dn_id = $dn_id;
-                    $salesorderitem -> item_id = $items[$i]['id'];
-                    $salesorderitem -> item_qty = $items[$i]['qty'];
-                    $salesorderitem -> remarks = $items[$i]['specification'];
+                    $salesorderitem->so_id = $so_id;
+                    $salesorderitem->dn_id = $dn_id;
+                    $salesorderitem->item_id = $items[$i]['id'];
+                    $salesorderitem->item_qty = $items[$i]['qty'];
+                    $salesorderitem->remarks = $items[$i]['specification'];
 
-                    $salesorderitem -> save();
+                    $salesorderitem->save();
                 }
             }
         }
@@ -209,12 +210,12 @@ $externalCompany = $this -> externalcompany[0] -> name;
         //dd($salesorder);
 
         $user_approver = User::find($approver);
-        $approver_email = $user_approver -> email;
-        $approver_name = $user_approver -> username;
+        $approver_email = $user_approver->email;
+        $approver_name = $user_approver->username;
 
-        $user_creator = User::find($salesorder -> extuser_id);
-        $creator_email = $user_creator -> email;
-        $creator_name = $user_creator -> username;
+        $user_creator = User::find($salesorder->extuser_id);
+        $creator_email = $user_creator->email;
+        $creator_name = $user_creator->username;
 
         $manager = User::where('dep_id', $salesorder->dep_id)->where('appr_role', 2)->first(); // appr_role: 2 means Manager
         if ($manager) {
@@ -222,47 +223,46 @@ $externalCompany = $this -> externalcompany[0] -> name;
             $manager_email = $manager->email;
 
             $data = array('approver_name' => $manager_name, 'creator_name' => $creator_name);
-            try{
-                Mail::send('email.requestapprove', $data, function($message) use ($manager_name, $manager_email, $creator_email) {
-                    $message -> to($manager_email, $manager_name)
-                        -> subject('Request For Approval Of Sales Order From Orders & Inventory System');
-                    $message -> from($creator_email, 'Request For Approval Of Sales Order From Orders & Inventory System');
+            try {
+                Mail::send('email.requestapprove', $data, function ($message) use ($manager_name, $manager_email, $creator_email) {
+                    $message->to($manager_email, $manager_name)
+                        ->subject('Request For Approval Of Sales Order From Orders & Inventory System');
+                    $message->from($creator_email, 'Request For Approval Of Sales Order From Orders & Inventory System');
                 });
 
                 $data = array('approver_name' => $approver_name, 'creator_name' => $creator_name);
-                Mail::send('email.requestapprove', $data, function($message) use ($approver_name, $approver_email, $creator_email) {
-                    $message -> to($approver_email, $approver_name)
-                        -> subject('Request For Approval Of Sales Order From Orders & Inventory System');
-                    $message -> from($creator_email, 'Request For Approval Of Sales Order From Orders & Inventory System');
+                Mail::send('email.requestapprove', $data, function ($message) use ($approver_name, $approver_email, $creator_email) {
+                    $message->to($approver_email, $approver_name)
+                        ->subject('Request For Approval Of Sales Order From Orders & Inventory System');
+                    $message->from($creator_email, 'Request For Approval Of Sales Order From Orders & Inventory System');
                 });
+            } catch (\Exception $e) {
             }
-            catch (\Exception $e){}
-
         }
         $result = ['result' => 'success'];
 
-        return response() -> json($result);
+        return response()->json($result);
     }
 
-	public function createSalesOrder_process(Request $request)
-	{
-		$costcentreId = $request->query('costcentre');
-		$remarks = $request->query('remarks');
+    public function createSalesOrder_process(Request $request)
+    {
+        $costcentreId = $request->query('costcentre');
+        $remarks = $request->query('remarks');
 
-		// 使用 Eloquent 查找对应的 CostCenter
-		$costCenter = CostCenter::find($costcentreId);
+        // 使用 Eloquent 查找对应的 CostCenter
+        $costCenter = CostCenter::find($costcentreId);
 
-		// 检查是否找到对应的 CostCenter
-		if ($costCenter) {
-			$costCentreCode = $costCenter->code; // 获取 code
-		} else {
-			// 如果没有找到，处理错误或者给一个默认值
-			$costCentreCode = 'Not found';
-		}
+        // 检查是否找到对应的 CostCenter
+        if ($costCenter) {
+            $costCentreCode = $costCenter->code; // 获取 code
+        } else {
+            // 如果没有找到，处理错误或者给一个默认值
+            $costCentreCode = 'Not found';
+        }
 
-		// 传递到视图
-		return view('pages.page-salesorder_create_process', compact('costCentreCode', 'remarks'));
-	}
+        // 传递到视图
+        return view('pages.page-salesorder_create_process', compact('costCentreCode', 'remarks'));
+    }
 
     public function salesorderUpdate($id)
     {
@@ -270,63 +270,63 @@ $externalCompany = $this -> externalcompany[0] -> name;
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 
-$internalCompany = $this -> internalcompany[0] -> name;
-$externalCompany = $this -> externalcompany[0] -> name;
+        $internalCompany = $this->internalcompany[0]->name;
+        $externalCompany = $this->externalcompany[0]->name;
 
         $date = date("Y-m-d");
         $salesorder_obj = DB::table('sales_orders')
-                    ->leftJoin('departments', 'sales_orders.dep_id', '=', 'departments.id')
-                    ->leftJoin('costcenters', 'sales_orders.cc_id', '=', 'costcenters.id')
-                    ->leftJoin('users as extusers', 'sales_orders.extuser_id', '=', 'extusers.id')
-                    ->leftJoin('users as approvers', 'sales_orders.appruser_id', '=', 'approvers.id')
-                    ->select('sales_orders.*', 'departments.name as department', 'costcenters.name as costcentre', 'extusers.username as extusername', 'approvers.username as approver')
-                    ->where('sales_orders.id', $id)
-                    ->get();
+            ->leftJoin('departments', 'sales_orders.dep_id', '=', 'departments.id')
+            ->leftJoin('costcenters', 'sales_orders.cc_id', '=', 'costcenters.id')
+            ->leftJoin('users as extusers', 'sales_orders.extuser_id', '=', 'extusers.id')
+            ->leftJoin('users as approvers', 'sales_orders.appruser_id', '=', 'approvers.id')
+            ->select('sales_orders.*', 'departments.name as department', 'costcenters.name as costcentre', 'extusers.username as extusername', 'approvers.username as approver')
+            ->where('sales_orders.id', $id)
+            ->get();
 
-        $salesorder['id'] = $salesorder_obj[0] -> id;
-        $salesorder['dn_id'] = $salesorder_obj[0] -> dn_id;
-        $salesorder['no'] = $salesorder_obj[0] -> no;
-        $salesorder['orderdate'] = $salesorder_obj[0] -> created_at;
-        $salesorder['department'] = $salesorder_obj[0] -> department;
-        $salesorder['costcentre'] = $salesorder_obj[0] -> costcentre;
-        $salesorder['extusername'] = $salesorder_obj[0] -> extusername;
-        $salesorder['approver'] = $salesorder_obj[0] -> approver;
-        $salesorder['approverdate'] = $salesorder_obj[0] -> appr_date;
-        $salesorder['remarks'] = $salesorder_obj[0] -> remarks;
-        $salesorder['status'] = $salesorder_obj[0] -> status;
-        $salesorder['request_date'] = $salesorder_obj[0] -> request_date ? date('Y-m-d' , strtotime($salesorder_obj[0] -> request_date)) : date('Y-m-d');
+        $salesorder['id'] = $salesorder_obj[0]->id;
+        $salesorder['dn_id'] = $salesorder_obj[0]->dn_id;
+        $salesorder['no'] = $salesorder_obj[0]->no;
+        $salesorder['orderdate'] = $salesorder_obj[0]->created_at;
+        $salesorder['department'] = $salesorder_obj[0]->department;
+        $salesorder['costcentre'] = $salesorder_obj[0]->costcentre;
+        $salesorder['extusername'] = $salesorder_obj[0]->extusername;
+        $salesorder['approver'] = $salesorder_obj[0]->approver;
+        $salesorder['approverdate'] = $salesorder_obj[0]->appr_date;
+        $salesorder['remarks'] = $salesorder_obj[0]->remarks;
+        $salesorder['status'] = $salesorder_obj[0]->status;
+        $salesorder['request_date'] = $salesorder_obj[0]->request_date ? date('Y-m-d', strtotime($salesorder_obj[0]->request_date)) : date('Y-m-d');
 
         $salesorderitem_objs = DB::table('sales_order_items')
             ->leftJoin('items', 'sales_order_items.item_id', '=', 'items.id')
             ->select('sales_order_items.item_qty as item_qty', 'sales_order_items.remarks as remarks', 'items.*')
-            ->where('sales_order_items.so_id', $salesorder_obj[0] -> id)
+            ->where('sales_order_items.so_id', $salesorder_obj[0]->id)
             ->get();
 
         $salesorderitems = array();
         $j = 0;
         foreach ($salesorderitem_objs as $salesorderitem_obj) {
-            $salesorderitems[$j]['id'] = $salesorderitem_obj -> id;
-            $salesorderitems[$j]['code'] = $salesorderitem_obj -> code;
-            $salesorderitems[$j]['name'] = $salesorderitem_obj -> name;
-            $salesorderitems[$j]['specification'] = $salesorderitem_obj -> specification;
-            $salesorderitems[$j]['unit'] = $salesorderitem_obj -> unit;
-            $salesorderitems[$j]['pack'] = $salesorderitem_obj -> pack;
-            $salesorderitems[$j]['qty'] = $salesorderitem_obj -> item_qty;
-            $salesorderitems[$j]['price'] = $salesorderitem_obj -> price;
-            $salesorderitems[$j]['remarks'] = $salesorderitem_obj -> remarks;
+            $salesorderitems[$j]['id'] = $salesorderitem_obj->id;
+            $salesorderitems[$j]['code'] = $salesorderitem_obj->code;
+            $salesorderitems[$j]['name'] = $salesorderitem_obj->name;
+            $salesorderitems[$j]['specification'] = $salesorderitem_obj->specification;
+            $salesorderitems[$j]['unit'] = $salesorderitem_obj->unit;
+            $salesorderitems[$j]['pack'] = $salesorderitem_obj->pack;
+            $salesorderitems[$j]['qty'] = $salesorderitem_obj->item_qty;
+            $salesorderitems[$j]['price'] = $salesorderitem_obj->price;
+            $salesorderitems[$j]['remarks'] = $salesorderitem_obj->remarks;
             $j++;
         }
         $salesorder['salesorderitems'] = $salesorderitems;
 
         $approvers = DB::table('users')
-                ->where('role', 'external')
-                ->where('appr_role', 1)
-                ->orWhere('admin_role', 0)
-                ->get();
+            ->where('role', 'external')
+            ->where('appr_role', 1)
+            ->orWhere('admin_role', 0)
+            ->get();
 
         $staffs = DB::table('users')
-                // ->where('role', 'external')
-                ->pluck('username', 'id');
+            // ->where('role', 'external')
+            ->pluck('username', 'id');
 
         $data = ['date' => $date];
         $costcenters = Costcenter::all();
@@ -335,7 +335,7 @@ $externalCompany = $this -> externalcompany[0] -> name;
         return view('pages.page-sales-update', compact('pageConfigs', 'staffs', 'breadcrumbs', 'internalCompany', 'externalCompany', 'data', 'costcenters', 'categories', 'salesorder', 'approvers'));
     }
 
-    public function salesorderReport($status)
+    public function salesorderReport($status = "initial")
     {
         $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Sales Order"], ['name' => "Sales Order Report"]];
 
@@ -350,132 +350,130 @@ $externalCompany = $this -> externalcompany[0] -> name;
             left join users uu on uu.id=so.extuser_id
             where so.no IS NOT NULL';
 
-            if (auth() -> user() -> role == 'external' && auth() -> user() -> appr_role) $sql .= ' and so.dep_id = ' . auth() -> user() -> dep_id;
+            if (auth()->user()->role == 'external' && auth()->user()->appr_role) $sql .= ' and so.dep_id = ' . auth()->user()->dep_id;
 
-            if (auth() -> user() -> role == 'external' && auth() -> user() -> appr_role == 0) $sql .= ' and so.extuser_id = ' . auth() -> user() -> id;
+            if (auth()->user()->role == 'external' && auth()->user()->appr_role == 0) $sql .= ' and so.extuser_id = ' . auth()->user()->id;
 
             $sql .= " order by so.dn_date desc";
 
             $salesorders_result = DB::select($sql);
-           // dd($salesorders_result); exit();
+            // dd($salesorders_result); exit();
 
-            $rep_code = auth() -> user() -> id . '_' . date('Ymd');
-            DB::table('sales_order_reports') -> where('rep_code', '=', $rep_code) -> delete();
+            $rep_code = auth()->user()->id . '_' . date('Ymd');
+            DB::table('sales_order_reports')->where('rep_code', '=', $rep_code)->delete();
 
             $salesorders = array();
             $j = 0;
             foreach ($salesorders_result as $salesorders_item) {
-                $salesorders[$j]['id'] = $salesorders_item -> id;
-                $salesorders[$j]['order_no'] = $salesorders_item -> order_no;
-                $salesorders[$j]['user'] = $salesorders_item -> user;
-                $salesorders[$j]['costcentre'] = $salesorders_item -> costcentre;
-                $salesorders[$j]['order_date'] = $salesorders_item -> order_date;
-                $salesorders[$j]['item_code'] = $salesorders_item -> item_code;
-                $salesorders[$j]['specification'] = $salesorders_item -> specification;
-                $salesorders[$j]['request_qty'] = $salesorders_item -> request_qty;
-                $salesorders[$j]['unit'] = $salesorders_item -> unit;
-                $salesorders[$j]['packing'] = $salesorders_item -> packing;
-                $salesorders[$j]['unit_price'] = $salesorders_item -> unit_price;
-                $salesorders[$j]['total_price'] = $salesorders_item -> unit_price * $salesorders_item -> request_qty;
-                $salesorders[$j]['approver'] = $salesorders_item -> approver;
-                $salesorders[$j]['approve_date'] = $salesorders_item -> approve_date;
-                $salesorders[$j]['dn_id'] = $salesorders_item -> dn_id;
-                $salesorders[$j]['dn_no'] = $salesorders_item -> dn_no;
-                $salesorders[$j]['dn_date'] = $salesorders_item -> dn_date;
+                $salesorders[$j]['id'] = $salesorders_item->id;
+                $salesorders[$j]['order_no'] = $salesorders_item->order_no;
+                $salesorders[$j]['user'] = $salesorders_item->user;
+                $salesorders[$j]['costcentre'] = $salesorders_item->costcentre;
+                $salesorders[$j]['order_date'] = $salesorders_item->order_date;
+                $salesorders[$j]['item_code'] = $salesorders_item->item_code;
+                $salesorders[$j]['specification'] = $salesorders_item->specification;
+                $salesorders[$j]['request_qty'] = $salesorders_item->request_qty;
+                $salesorders[$j]['unit'] = $salesorders_item->unit;
+                $salesorders[$j]['packing'] = $salesorders_item->packing;
+                $salesorders[$j]['unit_price'] = $salesorders_item->unit_price;
+                $salesorders[$j]['total_price'] = $salesorders_item->unit_price * $salesorders_item->request_qty;
+                $salesorders[$j]['approver'] = $salesorders_item->approver;
+                $salesorders[$j]['approve_date'] = $salesorders_item->approve_date;
+                $salesorders[$j]['dn_id'] = $salesorders_item->dn_id;
+                $salesorders[$j]['dn_no'] = $salesorders_item->dn_no;
+                $salesorders[$j]['dn_date'] = $salesorders_item->dn_date;
 
                 $salesorderreport = new SalesOrderReport();
-                $salesorderreport -> si_id = $salesorders_item -> id;
-                $salesorderreport -> order_no = $salesorders_item -> order_no;
-                $salesorderreport -> user = $salesorders_item -> user;
-                $salesorderreport -> costcentre = $salesorders_item -> costcentre;
-                $salesorderreport -> order_date = $salesorders_item -> order_date;
-                $salesorderreport -> item_code = $salesorders_item -> item_code;
-                $salesorderreport -> specification = isset($salesorders_item -> specification) ? $salesorders_item -> specification : '';
-                $salesorderreport -> request_qty = $salesorders_item -> request_qty;
-                $salesorderreport -> unit = $salesorders_item -> unit;
-                $salesorderreport -> packing = $salesorders_item -> packing;
-                $salesorderreport -> unit_price = $salesorders_item -> unit_price;
-                $salesorderreport -> total_price = $salesorders_item -> unit_price * $salesorders_item -> request_qty;
-                $salesorderreport -> approver = $salesorders_item -> approver;
-                $salesorderreport -> approve_date = $salesorders_item -> approve_date;
-                $salesorderreport -> dn_id = $salesorders_item -> dn_id;
-                $salesorderreport -> dn_no = $salesorders_item -> dn_no;
-                $salesorderreport -> dn_date = $salesorders_item -> dn_date;
-                $salesorderreport -> cc_id = $salesorders_item -> cc_id;
-                $salesorderreport -> item_id = $salesorders_item -> item_id;
-                $salesorderreport -> dep_id = $salesorders_item -> dep_id;
-                $salesorderreport -> user_id = $salesorders_item -> user_id;
-                $salesorderreport -> rep_code = auth() -> user() -> id . '_' . date('Ymd');
+                $salesorderreport->si_id = $salesorders_item->id;
+                $salesorderreport->order_no = $salesorders_item->order_no;
+                $salesorderreport->user = $salesorders_item->user;
+                $salesorderreport->costcentre = $salesorders_item->costcentre;
+                $salesorderreport->order_date = $salesorders_item->order_date;
+                $salesorderreport->item_code = $salesorders_item->item_code;
+                $salesorderreport->specification = isset($salesorders_item->specification) ? $salesorders_item->specification : '';
+                $salesorderreport->request_qty = $salesorders_item->request_qty;
+                $salesorderreport->unit = $salesorders_item->unit;
+                $salesorderreport->packing = $salesorders_item->packing;
+                $salesorderreport->unit_price = $salesorders_item->unit_price;
+                $salesorderreport->total_price = $salesorders_item->unit_price * $salesorders_item->request_qty;
+                $salesorderreport->approver = $salesorders_item->approver;
+                $salesorderreport->approve_date = $salesorders_item->approve_date;
+                $salesorderreport->dn_id = $salesorders_item->dn_id;
+                $salesorderreport->dn_no = $salesorders_item->dn_no;
+                $salesorderreport->dn_date = $salesorders_item->dn_date;
+                $salesorderreport->cc_id = $salesorders_item->cc_id;
+                $salesorderreport->item_id = $salesorders_item->item_id;
+                $salesorderreport->dep_id = $salesorders_item->dep_id;
+                $salesorderreport->user_id = $salesorders_item->user_id;
+                $salesorderreport->rep_code = auth()->user()->id . '_' . date('Ymd');
 
-                $salesorderreport -> save();
+                $salesorderreport->save();
 
-                $salesorders[$j]['rep_id'] = $salesorderreport -> id;
-                $salesorders[$j]['rep_code'] = auth() -> user() -> id . '_' . date('Ymd');
+                $salesorders[$j]['rep_id'] = $salesorderreport->id;
+                $salesorders[$j]['rep_code'] = auth()->user()->id . '_' . date('Ymd');
 
                 $j++;
             }
-        }
-
-        else {
+        } else {
             $rep_code = $status;
-            $salesorders = SalesOrderReport::where('rep_code', $rep_code) -> get();
+            $salesorders = SalesOrderReport::where('rep_code', $rep_code)->get();
         }
 
-$salesorder_objs = DB::table('sales_orders')
-                    ->leftJoin('departments', 'sales_orders.dep_id', '=', 'departments.id')
-                    ->leftJoin('costcenters', 'sales_orders.cc_id', '=', 'costcenters.id')
-                    ->leftJoin('users as extusers', 'sales_orders.extuser_id', '=', 'extusers.id')
-                    ->leftJoin('users as approvers', 'sales_orders.appruser_id', '=', 'approvers.id')
-                    ->select('sales_orders.*', 'departments.name as department', 'costcenters.code as costcentre', 'extusers.username as extusername', 'approvers.username as approver')
-                    ->whereIn('sales_orders.status', [3,4])
-                    ->where('sales_orders.no', '!=', '')
-                    ->orderBy('sales_orders.dn_date', 'DESC')
-                    ->get();
+        $salesorder_objs = DB::table('sales_orders')
+            ->leftJoin('departments', 'sales_orders.dep_id', '=', 'departments.id')
+            ->leftJoin('costcenters', 'sales_orders.cc_id', '=', 'costcenters.id')
+            ->leftJoin('users as extusers', 'sales_orders.extuser_id', '=', 'extusers.id')
+            ->leftJoin('users as approvers', 'sales_orders.appruser_id', '=', 'approvers.id')
+            ->select('sales_orders.*', 'departments.name as department', 'costcenters.code as costcentre', 'extusers.username as extusername', 'approvers.username as approver')
+            ->whereIn('sales_orders.status', [3, 4])
+            ->where('sales_orders.no', '!=', '')
+            ->orderBy('sales_orders.dn_date', 'DESC')
+            ->get();
 
 
         $salesorders_new = array();
         $i = 0;
         foreach ($salesorder_objs as $salesorder_obj) {
-                if (auth() -> user() -> role == 'external' && auth() -> user() -> admin_role == 0 && auth() -> user() -> appr_role == 0 && auth() -> user() -> id != $salesorder_obj -> extuser_id) continue;
+            if (auth()->user()->role == 'external' && auth()->user()->admin_role == 0 && auth()->user()->appr_role == 0 && auth()->user()->id != $salesorder_obj->extuser_id) continue;
             //dd((auth() -> user()->toArray()));
-                if (auth() -> user() -> role == 'external' && auth() -> user() -> admin_role == 0 && auth() -> user() -> dep_id != $salesorder_obj -> dep_id) continue;
+            if (auth()->user()->role == 'external' && auth()->user()->admin_role == 0 && auth()->user()->dep_id != $salesorder_obj->dep_id) continue;
 
-                $salesorders_new[$i]['id'] = $salesorder_obj -> id;
-                $salesorders_new[$i]['no'] = $salesorder_obj -> no;
-                $salesorders_new[$i]['orderdate'] = $salesorder_obj -> dn_date;
-                $salesorders_new[$i]['department'] = $salesorder_obj -> department;
-                $salesorders_new[$i]['costcentre'] = $salesorder_obj -> costcentre;
-                $salesorders_new[$i]['extusername'] = $salesorder_obj -> extusername;
-                $salesorders_new[$i]['approver'] = $salesorder_obj -> approver;
-                $salesorders_new[$i]['approverdate'] = $salesorder_obj -> appr_date;
-                $salesorders_new[$i]['remarks'] = $salesorder_obj -> remarks;
-                $salesorders_new[$i]['status'] = $salesorder_obj -> status;
-                $salesorders_new[$i]['appruser_id'] = $salesorder_obj -> appruser_id;
-                $salesorders_new[$i]['dep_id'] = $salesorder_obj -> dep_id;
-                $salesorders_new[$i]['extuser_id'] = $salesorder_obj -> extuser_id;
+            $salesorders_new[$i]['id'] = $salesorder_obj->id;
+            $salesorders_new[$i]['no'] = $salesorder_obj->no;
+            $salesorders_new[$i]['orderdate'] = $salesorder_obj->dn_date;
+            $salesorders_new[$i]['department'] = $salesorder_obj->department;
+            $salesorders_new[$i]['costcentre'] = $salesorder_obj->costcentre;
+            $salesorders_new[$i]['extusername'] = $salesorder_obj->extusername;
+            $salesorders_new[$i]['approver'] = $salesorder_obj->approver;
+            $salesorders_new[$i]['approverdate'] = $salesorder_obj->appr_date;
+            $salesorders_new[$i]['remarks'] = $salesorder_obj->remarks;
+            $salesorders_new[$i]['status'] = $salesorder_obj->status;
+            $salesorders_new[$i]['appruser_id'] = $salesorder_obj->appruser_id;
+            $salesorders_new[$i]['dep_id'] = $salesorder_obj->dep_id;
+            $salesorders_new[$i]['extuser_id'] = $salesorder_obj->extuser_id;
 
-                $salesorderitem_objs = DB::table('sales_order_items')
-                    ->leftJoin('items', 'sales_order_items.item_id', '=', 'items.id')
-->leftJoin('sales_order_reports', 'sales_order_items.id', '=', 'sales_order_reports.si_id')
-                    ->select('sales_order_reports.id as so_re', 'sales_order_items.item_qty as item_qty', 'sales_order_items.remarks as remarks', 'items.*')
-                    ->where('sales_order_items.so_id', $salesorder_obj -> id)
-                    ->get();
+            $salesorderitem_objs = DB::table('sales_order_items')
+                ->leftJoin('items', 'sales_order_items.item_id', '=', 'items.id')
+                ->leftJoin('sales_order_reports', 'sales_order_items.id', '=', 'sales_order_reports.si_id')
+                ->select('sales_order_reports.id as so_re', 'sales_order_items.item_qty as item_qty', 'sales_order_items.remarks as remarks', 'items.*')
+                ->where('sales_order_items.so_id', $salesorder_obj->id)
+                ->get();
 
-                $salesorderitems = array();
-                $j = 0;
-                foreach ($salesorderitem_objs as $salesorderitem_obj) {
-                    $salesorderitems[$j]['id'] = $salesorderitem_obj -> id;
-$salesorderitems[$j]['so_re'] = $salesorderitem_obj -> so_re;
-                    $salesorderitems[$j]['name'] = $salesorderitem_obj -> name;
-                    $salesorderitems[$j]['specification'] = $salesorderitem_obj -> specification;
-                    $salesorderitems[$j]['unit'] = $salesorderitem_obj -> unit;
-                    $salesorderitems[$j]['pack'] = $salesorderitem_obj -> pack;
-                    $salesorderitems[$j]['qty'] = $salesorderitem_obj -> item_qty;
-                    $salesorderitems[$j]['price'] = $salesorderitem_obj -> price;
-                    $salesorderitems[$j]['remarks'] = $salesorderitem_obj -> remarks;
-                    $j++;
-                }
-                $salesorders_new[$i]['salesorderitems'] = $salesorderitems;
+            $salesorderitems = array();
+            $j = 0;
+            foreach ($salesorderitem_objs as $salesorderitem_obj) {
+                $salesorderitems[$j]['id'] = $salesorderitem_obj->id;
+                $salesorderitems[$j]['so_re'] = $salesorderitem_obj->so_re;
+                $salesorderitems[$j]['name'] = $salesorderitem_obj->name;
+                $salesorderitems[$j]['specification'] = $salesorderitem_obj->specification;
+                $salesorderitems[$j]['unit'] = $salesorderitem_obj->unit;
+                $salesorderitems[$j]['pack'] = $salesorderitem_obj->pack;
+                $salesorderitems[$j]['qty'] = $salesorderitem_obj->item_qty;
+                $salesorderitems[$j]['price'] = $salesorderitem_obj->price;
+                $salesorderitems[$j]['remarks'] = $salesorderitem_obj->remarks;
+                $j++;
+            }
+            $salesorders_new[$i]['salesorderitems'] = $salesorderitems;
             $i++;
         }
 
@@ -483,25 +481,26 @@ $salesorderitems[$j]['so_re'] = $salesorderitem_obj -> so_re;
 
         $items = Item::all();
 
-$internalCompany = $this -> internalcompany[0] -> name;
-$externalCompany = $this -> externalcompany[0] -> name;
+        $internalCompany = $this->internalcompany[0]->name;
+        $externalCompany = $this->externalcompany[0]->name;
 
         return view('pages.page-sales-report', compact('pageConfigs', 'internalCompany', 'externalCompany', 'breadcrumbs', 'salesorders', 'salesorders_new', 'costcenters', 'items'));
     }
 
-    public function getReports(Request $request) {
-        $costcentre = $request -> costcentre;
-        $item = $request -> item;
-        $so_from = $request -> so_from;
-        $so_to = $request -> so_to;
-        $dn_from = $request -> dn_from;
-        $dn_to = $request -> dn_to;
+    public function getReports(Request $request)
+    {
+        $costcentre = $request->costcentre;
+        $item = $request->item;
+        $so_from = $request->so_from;
+        $so_to = $request->so_to;
+        $dn_from = $request->dn_from;
+        $dn_to = $request->dn_to;
 
-        $sql = 'select * from sales_order_reports where rep_code = "' . auth() -> user() -> id . '_' . date('Ymd') . '"';
+        $sql = 'select * from sales_order_reports where rep_code = "' . auth()->user()->id . '_' . date('Ymd') . '"';
 
-        if (auth() -> user() -> role == 'external' && auth() -> user() -> appr_role) $sql .= ' dep_id = ' . auth() -> user() -> dep_id;
+        if (auth()->user()->role == 'external' && auth()->user()->appr_role) $sql .= ' dep_id = ' . auth()->user()->dep_id;
 
-        if (auth() -> user() -> role == 'external' && auth() -> user() -> appr_role == 0) $sql .= ' user_id = ' . auth() -> user() -> id;
+        if (auth()->user()->role == 'external' && auth()->user()->appr_role == 0) $sql .= ' user_id = ' . auth()->user()->id;
 
         if ($costcentre) $sql .= ' and cc_id = ' . $costcentre;
 
@@ -512,10 +511,10 @@ $externalCompany = $this -> externalcompany[0] -> name;
         $salesorders = array();
         $j = 0;
         foreach ($salesorders_result as $salesorders_item) {
-            $orderdate_array = explode(' ', $salesorders_item -> order_date);
+            $orderdate_array = explode(' ', $salesorders_item->order_date);
             $orderdate = $orderdate_array[0];
 
-            $notedate_array = explode(' ', $salesorders_item -> dn_date);
+            $notedate_array = explode(' ', $salesorders_item->dn_date);
             $notedate = $notedate_array[0];
 
             $orderdatefrom_flag = 1;
@@ -557,28 +556,28 @@ $externalCompany = $this -> externalcompany[0] -> name;
             }
 
             if ($orderdatefrom_flag && $orderdateto_flag && $notedatefrom_flag && $notedateto_flag) {
-                $salesorders[$j]['id'] = $salesorders_item -> id;
-                $salesorders[$j]['order_no'] = $salesorders_item -> order_no;
-                $salesorders[$j]['user'] = $salesorders_item -> user;
-                $salesorders[$j]['costcentre'] = $salesorders_item -> costcentre;
-                $salesorders[$j]['order_date'] = $salesorders_item -> order_date;
-                $salesorders[$j]['item_code'] = $salesorders_item -> item_code;
-                $salesorders[$j]['specification'] = $salesorders_item -> specification;
-                $salesorders[$j]['request_qty'] = $salesorders_item -> request_qty;
-                $salesorders[$j]['unit'] = $salesorders_item -> unit;
-                $salesorders[$j]['packing'] = $salesorders_item -> packing;
-                $salesorders[$j]['unit_price'] = $salesorders_item -> unit_price;
-                $salesorders[$j]['total_price'] = $salesorders_item -> total_price;
-                $salesorders[$j]['approver'] = $salesorders_item -> approver;
-                $salesorders[$j]['approve_date'] = $salesorders_item -> approve_date;
-                $salesorders[$j]['dn_id'] = $salesorders_item -> dn_id;
-                $salesorders[$j]['dn_no'] = $salesorders_item -> dn_no;
-                $salesorders[$j]['dn_date'] = $salesorders_item -> dn_date;
+                $salesorders[$j]['id'] = $salesorders_item->id;
+                $salesorders[$j]['order_no'] = $salesorders_item->order_no;
+                $salesorders[$j]['user'] = $salesorders_item->user;
+                $salesorders[$j]['costcentre'] = $salesorders_item->costcentre;
+                $salesorders[$j]['order_date'] = $salesorders_item->order_date;
+                $salesorders[$j]['item_code'] = $salesorders_item->item_code;
+                $salesorders[$j]['specification'] = $salesorders_item->specification;
+                $salesorders[$j]['request_qty'] = $salesorders_item->request_qty;
+                $salesorders[$j]['unit'] = $salesorders_item->unit;
+                $salesorders[$j]['packing'] = $salesorders_item->packing;
+                $salesorders[$j]['unit_price'] = $salesorders_item->unit_price;
+                $salesorders[$j]['total_price'] = $salesorders_item->total_price;
+                $salesorders[$j]['approver'] = $salesorders_item->approver;
+                $salesorders[$j]['approve_date'] = $salesorders_item->approve_date;
+                $salesorders[$j]['dn_id'] = $salesorders_item->dn_id;
+                $salesorders[$j]['dn_no'] = $salesorders_item->dn_no;
+                $salesorders[$j]['dn_date'] = $salesorders_item->dn_date;
                 $j++;
             }
         }
 
-        return response() -> json($salesorders);
+        return response()->json($salesorders);
     }
 
     public function salesorderSpecialhandling($id)
@@ -588,98 +587,100 @@ $externalCompany = $this -> externalcompany[0] -> name;
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 
         $salesorderreport = SalesOrderReport::find($id);
-        $salesorderitem = SalesOrderItem::find($salesorderreport -> si_id);
-        $salesorder = SalesOrder::find($salesorderitem -> so_id);
+        $salesorderitem = SalesOrderItem::find($salesorderreport->si_id);
+        $salesorder = SalesOrder::find($salesorderitem->so_id);
 
-$internalCompany = $this -> internalcompany[0] -> name;
-$externalCompany = $this -> externalcompany[0] -> name;
+        $internalCompany = $this->internalcompany[0]->name;
+        $externalCompany = $this->externalcompany[0]->name;
 
         return view('pages.page-sales-special-handling', compact('pageConfigs', 'internalCompany', 'externalCompany', 'breadcrumbs', 'salesorderreport', 'salesorder'));
     }
 
-    public function salesorderreportUpdate(Request $request) {
-        $salesorderreport = SalesOrderReport::find($request -> rep_id);
+    public function salesorderreportUpdate(Request $request)
+    {
+        $salesorderreport = SalesOrderReport::find($request->rep_id);
 
-        $salesorderreport -> user = $request -> user;
-        $salesorderreport -> costcentre = $request -> costcentre;
-        $salesorderreport -> order_date = $request -> order_date;
-        $salesorderreport -> item_code = $request -> item_code;
-        $salesorderreport -> specification = $request -> specification;
-        $salesorderreport -> request_qty = $request -> request_qty;
-        $salesorderreport -> unit = $request -> unit;
-        $salesorderreport -> packing = $request -> packing;
-        $salesorderreport -> unit_price = $request -> unit_price;
-        $salesorderreport -> total_price = $request -> total_price;
-        $salesorderreport -> approver = $request -> approver;
-        $salesorderreport -> approve_date = $request -> approve_date;
-        $salesorderreport -> dn_no = $request -> dn_no;
-        $salesorderreport -> dn_date = $request -> dn_date;
+        $salesorderreport->user = $request->user;
+        $salesorderreport->costcentre = $request->costcentre;
+        $salesorderreport->order_date = $request->order_date;
+        $salesorderreport->item_code = $request->item_code;
+        $salesorderreport->specification = $request->specification;
+        $salesorderreport->request_qty = $request->request_qty;
+        $salesorderreport->unit = $request->unit;
+        $salesorderreport->packing = $request->packing;
+        $salesorderreport->unit_price = $request->unit_price;
+        $salesorderreport->total_price = $request->total_price;
+        $salesorderreport->approver = $request->approver;
+        $salesorderreport->approve_date = $request->approve_date;
+        $salesorderreport->dn_no = $request->dn_no;
+        $salesorderreport->dn_date = $request->dn_date;
 
-        $salesorderreport -> save();
+        $salesorderreport->save();
 
-        if ($request -> dn_no != null) {
-            $sql = 'select u.* from users u left join sales_orders so on so.appruser_id = u.id left join sales_order_items si on si.so_id = so.id left join sales_order_reports sr on sr.si_id = si.id where sr.id = ' . $request -> rep_id;
+        if ($request->dn_no != null) {
+            $sql = 'select u.* from users u left join sales_orders so on so.appruser_id = u.id left join sales_order_items si on si.so_id = so.id left join sales_order_reports sr on sr.si_id = si.id where sr.id = ' . $request->rep_id;
 
             $approver = DB::select($sql);
 
-            $approver_email = $approver[0] -> email;
-            $approver_name = $approver[0] -> username;
+            $approver_email = $approver[0]->email;
+            $approver_name = $approver[0]->username;
 
-            $user_creator = User::find($salesorderreport -> user_id);
-            $creator_email = $user_creator -> email;
-            $creator_name = $user_creator -> username;
+            $user_creator = User::find($salesorderreport->user_id);
+            $creator_email = $user_creator->email;
+            $creator_name = $user_creator->username;
 
-            $int_users = User::where('rcvemail', 1) -> get();
+            $int_users = User::where('rcvemail', 1)->get();
 
             foreach ($int_users as $int_user) {
-                $int_user_email = $int_user -> email;
-                $int_user_name = $int_user -> username;
+                $int_user_email = $int_user->email;
+                $int_user_name = $int_user->username;
 
                 $data = array('int_user' => $int_user_name, 'update_user' => $creator_name);
-                Mail::send('email.updatesalesorder', $data, function($message) use ($int_user_name, $creator_email, $int_user_email) {
-                    $message -> to($int_user_email, $int_user_name)
-                    -> subject('Resubmit Of Sales Order From Orders & Inventory System');
-                    $message -> from($creator_email, 'Resubmit Of Sales Order From Orders & Inventory System');
+                Mail::send('email.updatesalesorder', $data, function ($message) use ($int_user_name, $creator_email, $int_user_email) {
+                    $message->to($int_user_email, $int_user_name)
+                        ->subject('Resubmit Of Sales Order From Orders & Inventory System');
+                    $message->from($creator_email, 'Resubmit Of Sales Order From Orders & Inventory System');
                 });
             }
         }
 
-        if ($request -> status == 5) {
-            $salesorderreport = SalesOrderReport::find($request -> rep_id);
-            $salesorderitem = SalesOrderItem::find($salesorderreport -> si_id);
-            $salesorder = SalesOrder::find($salesorderitem -> so_id);
+        if ($request->status == 5) {
+            $salesorderreport = SalesOrderReport::find($request->rep_id);
+            $salesorderitem = SalesOrderItem::find($salesorderreport->si_id);
+            $salesorder = SalesOrder::find($salesorderitem->so_id);
 
-            $salesorder -> status = 5;
-            $salesorder -> save();
+            $salesorder->status = 5;
+            $salesorder->save();
 
-            $int_users = User::where('rcvemail', 1) -> get();
+            $int_users = User::where('rcvemail', 1)->get();
 
             foreach ($int_users as $int_user) {
-                $int_user_email = $int_user -> email;
-                $int_user_name = $int_user -> username;
+                $int_user_email = $int_user->email;
+                $int_user_name = $int_user->username;
 
-                $creator_email = auth() -> user() -> email;
-                $creator_name = auth() -> user() -> username;
+                $creator_email = auth()->user()->email;
+                $creator_name = auth()->user()->username;
 
                 $data = array('int_user' => $int_user_name, 'update_user' => $creator_name);
-                Mail::send('email.cancelsalesorder', $data, function($message) use ($int_user_name, $creator_email, $int_user_email) {
-                    $message -> to($int_user_email, $int_user_name)
-                    -> subject('Cancel Of Sales Order From Orders & Inventory System');
-                    $message -> from($creator_email, 'Cancel Of Sales Order From Orders & Inventory System');
+                Mail::send('email.cancelsalesorder', $data, function ($message) use ($int_user_name, $creator_email, $int_user_email) {
+                    $message->to($int_user_email, $int_user_name)
+                        ->subject('Cancel Of Sales Order From Orders & Inventory System');
+                    $message->from($creator_email, 'Cancel Of Sales Order From Orders & Inventory System');
                 });
             }
         }
 
-        return redirect('/sales-order-report/' . $salesorderreport -> rep_code);
+        return redirect('/order-history/' . $salesorderreport->rep_code);
     }
 
-    public function salesorderRegister(Request $request) {
-       // dd($request);
-        $costcentre = $request -> costcentre;
-        $approver = $request -> approver;
-        $remarks = $request -> remarks;
-        $so_id = $request -> so_id;
-        $dn_id = $request -> dn_id;
+    public function salesorderRegister(Request $request)
+    {
+        // dd($request);
+        $costcentre = $request->costcentre;
+        $approver = $request->approver;
+        $remarks = $request->remarks;
+        $so_id = $request->so_id;
+        $dn_id = $request->dn_id;
 
         $salesorder = SalesOrder::find($so_id);
 
@@ -691,26 +692,26 @@ $externalCompany = $this -> externalcompany[0] -> name;
         else if ($so_id / 1000 < 1) $code = '0' . $so_id;
         else $code = $so_id;
 
-        $salesorder -> no = 'CS-SO-' . $nodate . $code;
-        $salesorder -> cc_id = $costcentre;
-        $salesorder -> remarks = $remarks;
-        $salesorder -> appruser_id = $approver;
-        $salesorder -> dn_id = $dn_id;
-        $salesorder -> request_date = $request->filled('request_date') ? $request->request_date : date("Y-m-d");
+        $salesorder->no = 'CS-SO-' . $nodate . $code;
+        $salesorder->cc_id = $costcentre;
+        $salesorder->remarks = $remarks;
+        $salesorder->appruser_id = $approver;
+        $salesorder->dn_id = $dn_id;
+        $salesorder->request_date = $request->filled('request_date') ? $request->request_date : date("Y-m-d");
         if ($request->filled('extuser_id')) {
-            $salesorder -> extuser_id = $request -> extuser_id;
+            $salesorder->extuser_id = $request->extuser_id;
         }
 
-        $salesorder -> save();
+        $salesorder->save();
         //dd($salesorder);
 
         $user_approver = User::find($approver);
-        $approver_email = $user_approver -> email;
-        $approver_name = $user_approver -> username;
+        $approver_email = $user_approver->email;
+        $approver_name = $user_approver->username;
 
-        $user_creator = User::find($salesorder -> extuser_id);
-        $creator_email = $user_creator -> email;
-        $creator_name = $user_creator -> username;
+        $user_creator = User::find($salesorder->extuser_id);
+        $creator_email = $user_creator->email;
+        $creator_name = $user_creator->username;
 
         $manager = User::where('dep_id', $salesorder->dep_id)->where('appr_role', 2)->first(); // appr_role: 2 means Manager
         if ($manager) {
@@ -718,113 +719,113 @@ $externalCompany = $this -> externalcompany[0] -> name;
             $manager_email = $manager->email;
 
             $data = array('approver_name' => $manager_name, 'creator_name' => $creator_name);
-            try{
-                Mail::send('email.requestapprove', $data, function($message) use ($manager_name, $manager_email, $creator_email) {
-                    $message -> to($manager_email, $manager_name)
-                        -> subject('Request For Approval Of Sales Order From Orders & Inventory System');
-                    $message -> from($creator_email, 'Request For Approval Of Sales Order From Orders & Inventory System');
+            try {
+                Mail::send('email.requestapprove', $data, function ($message) use ($manager_name, $manager_email, $creator_email) {
+                    $message->to($manager_email, $manager_name)
+                        ->subject('Request For Approval Of Sales Order From Orders & Inventory System');
+                    $message->from($creator_email, 'Request For Approval Of Sales Order From Orders & Inventory System');
                 });
 
                 $data = array('approver_name' => $approver_name, 'creator_name' => $creator_name);
-                Mail::send('email.requestapprove', $data, function($message) use ($approver_name, $approver_email, $creator_email) {
-                    $message -> to($approver_email, $approver_name)
-                        -> subject('Request For Approval Of Sales Order From Orders & Inventory System');
-                    $message -> from($creator_email, 'Request For Approval Of Sales Order From Orders & Inventory System');
+                Mail::send('email.requestapprove', $data, function ($message) use ($approver_name, $approver_email, $creator_email) {
+                    $message->to($approver_email, $approver_name)
+                        ->subject('Request For Approval Of Sales Order From Orders & Inventory System');
+                    $message->from($creator_email, 'Request For Approval Of Sales Order From Orders & Inventory System');
                 });
+            } catch (\Exception $e) {
             }
-            catch (\Exception $e){}
-
         }
-        return redirect('/current-sales-order-list');
+        return redirect('/my-order');
     }
 
-    public function saveItems(Request $request) {
-        $items = $request -> items;
-        $so_id = $request -> so_id;
-        $dn_id = $request -> dn_id;
+    public function saveItems(Request $request)
+    {
+        $items = $request->items;
+        $so_id = $request->so_id;
+        $dn_id = $request->dn_id;
 
         DB::table('sales_order_items')->where('so_id', $so_id)->delete();
 
         for ($i = 0; $i < count($items); $i++) {
             if ($items[$i]['qty']) {
                 $salesorderitem = new SalesOrderItem();
-                $salesorderitem -> so_id = $so_id;
-                $salesorderitem -> dn_id = $dn_id;
-                $salesorderitem -> item_id = $items[$i]['id'];
-                $salesorderitem -> item_qty = $items[$i]['qty'];
-                $salesorderitem -> remarks = $items[$i]['specification'];
+                $salesorderitem->so_id = $so_id;
+                $salesorderitem->dn_id = $dn_id;
+                $salesorderitem->item_id = $items[$i]['id'];
+                $salesorderitem->item_qty = $items[$i]['qty'];
+                $salesorderitem->remarks = $items[$i]['specification'];
 
-                $salesorderitem -> save();
+                $salesorderitem->save();
             }
         }
 
         $result = ['result' => 'success'];
 
-        return response() -> json($result);
+        return response()->json($result);
     }
 
-    public function approveSO(Request $request) {
-        $id = $request -> id;
+    public function approveSO(Request $request)
+    {
+        $id = $request->id;
         $salesorder = SalesOrder::find($id);
-        $salesorder -> status = 1;
-        $salesorder -> appr_date = date('Y-m-d h:m:s');
-        $salesorder -> save();
+        $salesorder->status = 1;
+        $salesorder->appr_date = date('Y-m-d h:m:s');
+        $salesorder->save();
 
         $salesorderitem_objs = DB::table('sales_order_items')
             ->leftJoin('items', 'sales_order_items.item_id', '=', 'items.id')
             ->select('sales_order_items.item_qty as item_qty', 'sales_order_items.remarks as remarks', 'items.*')
-            ->where('sales_order_items.so_id', $salesorder -> id)
+            ->where('sales_order_items.so_id', $salesorder->id)
             ->get();
 
         foreach ($salesorderitem_objs as $salesorderitem_obj) {
-            $item = Item::find($salesorderitem_obj -> id);
+            $item = Item::find($salesorderitem_obj->id);
             if ($item) {
-                $item->stock = $salesorderitem_obj->stock - $salesorderitem_obj -> item_qty;
+                $item->stock = $salesorderitem_obj->stock - $salesorderitem_obj->item_qty;
                 $item->save();
             }
         }
 
-        $approve_user = User::find($salesorder -> appruser_id);
-        $approver_email = $approve_user -> email;
-        $approver_name = $approve_user -> username;
+        $approve_user = User::find($salesorder->appruser_id);
+        $approver_email = $approve_user->email;
+        $approver_name = $approve_user->username;
 
-        $int_users = User::where('rcvemail', 1) -> get();
+        $int_users = User::where('rcvemail', 1)->get();
 
-        try{
+        try {
             foreach ($int_users as $int_user) {
-                $int_user_email = $int_user -> email;
-                $int_user_name = $int_user -> username;
+                $int_user_email = $int_user->email;
+                $int_user_name = $int_user->username;
 
                 $data = array('int_user' => $int_user_name, 'approve_user' => $approver_name);
-                Mail::send('email.requestdeliver', $data, function($message) use ($int_user_name, $approver_email, $int_user_email) {
-                    $message -> to($int_user_email, $int_user_name)
-                        -> subject('Request For Deliver Of Sales Order From Orders & Inventory System');
-                    $message -> from($approver_email, 'Request For Deliver Of Sales Order From Orders & Inventory System');
+                Mail::send('email.requestdeliver', $data, function ($message) use ($int_user_name, $approver_email, $int_user_email) {
+                    $message->to($int_user_email, $int_user_name)
+                        ->subject('Request For Deliver Of Sales Order From Orders & Inventory System');
+                    $message->from($approver_email, 'Request For Deliver Of Sales Order From Orders & Inventory System');
                 });
             }
-        }
-        catch (\Exception $e){
-
+        } catch (\Exception $e) {
         }
         $result = ['result' => 'success'];
 
-        return response() -> json($result);
+        return response()->json($result);
     }
 
-    public function rejectSO(Request $request) {
-        $id = $request -> id;
+    public function rejectSO(Request $request)
+    {
+        $id = $request->id;
         $salesorder = SalesOrder::find($id);
-        $salesorder -> status = 4;
-        $salesorder -> save();
+        $salesorder->status = 4;
+        $salesorder->save();
 
         $result = ['result' => 'success'];
 
-        return response() -> json($result);
+        return response()->json($result);
     }
 
     public function printPdf($id)
     {
-$sql = "select so.*, u.telephone tel, u.username user, dp.name department from sales_orders so left join users u on u.id=so.extuser_id left join departments dp on dp.id=so.dep_id where so.id=" . $id;
+        $sql = "select so.*, u.telephone tel, u.username user, dp.name department from sales_orders so left join users u on u.id=so.extuser_id left join departments dp on dp.id=so.dep_id where so.id=" . $id;
         $salesorderreports = DB::select($sql);
 
         $sql = "select soi.item_qty qty, i.* from sales_order_items soi left join items i on i.id=soi.item_id where soi.so_id = " . $id;

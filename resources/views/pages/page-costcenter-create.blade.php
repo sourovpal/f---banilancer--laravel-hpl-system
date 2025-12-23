@@ -2,7 +2,7 @@
 @extends('layouts.contentLayoutMaster')
 
 {{-- page title --}}
-@section('title','Create Costcenter Record')
+@section('title','New Costcenter')
 
 {{-- vendors styles --}}
 @section('vendor-style')

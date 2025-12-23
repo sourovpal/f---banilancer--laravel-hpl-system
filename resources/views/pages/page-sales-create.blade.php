@@ -2,7 +2,7 @@
 @extends('layouts.contentLayoutMaster')
 
 {{-- page title --}}
-@section('title','Create Sales Order')
+@section('title','New Request')
 
 {{-- vendors styles --}}
 @section('vendor-style')
@@ -191,7 +191,7 @@
           <div class="media display-flex align-items-center">
             <span class="card-title">Sales Order Remarks:</span>
           </div>
-          <textarea id="remarks" name="remarks" class="materialize-textarea"></textarea>
+          <input id="remarks" name="remarks" class="materialize-textarea"></input>
           <div class="action_wrap mt-2 text-right">
             <button type="button" class="btn indigo mr-2" id="save_all">
               Next</button>

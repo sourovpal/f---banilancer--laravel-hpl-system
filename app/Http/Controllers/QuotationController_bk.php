@@ -311,7 +311,7 @@ class QuotationController extends Controller
                 $department = 'Indifinite';
             } else {
                 $department_obj = Department::find($quotation_obj->dep_id);
-                if( $department_obj){
+                if ($department_obj) {
                     $department = $department_obj->name;
                 }
             }
@@ -320,12 +320,12 @@ class QuotationController extends Controller
             $externalCompany = $this->externalcompany[0]->name;
 
             return view('pages.page-quotation-update', compact('pageConfigs', 'internalCompany', 'externalCompany', 'breadcrumbs', 'quotation', 'costcenters', 'data', 'department'));
-        }else{
+        } else {
             return Redirect::back()->withErrors(['msg' => 'Quotation does not Found']);
         }
     }
 
-    public function quotationReport($status)
+    public function quotationReport($status = "initial")
     {
         $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Small Order"], ['name' => "Small Order Report"]];
 
@@ -480,7 +480,7 @@ class QuotationController extends Controller
         $quotation->cc_id = $costcentre;
         $quotation->save();
 
-        return redirect('/create-quotation-record/' . $qn_id);
+        return redirect('/new-quotation/' . $qn_id);
     }
 
     public function quotationRegister(Request $request)
@@ -502,7 +502,7 @@ class QuotationController extends Controller
         }
         $quotation->save();
 
-        //return redirect('/current-quotation-list');
+        //return redirect('/current-quotation');
     }
 
     public function quotationItemDelete($id)
@@ -510,7 +510,7 @@ class QuotationController extends Controller
         $quottationitem = QuotationItem::find($id);
         $qn_id = $quottationitem->qn_id;
         $quottationitem->delete();
-        return redirect('/create-quotation-record/' . $qn_id);
+        return redirect('/new-quotation/' . $qn_id);
     }
 
     public function getReports(Request $request)

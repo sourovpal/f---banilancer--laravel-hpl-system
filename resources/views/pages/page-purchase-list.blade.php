@@ -56,7 +56,7 @@
                 <td>
                   @if (Auth::user() -> role == 'master' || Auth::user() -> role == 'internal')
                   <a class="ml-5" href="{{asset('/update-purchase-order-record/' . $purchaseorder['id'])}}">Edit<!-- <i class="material-icons">edit</i>  --></a>
-                  <a class="ml-5" href="{{asset('/create-good-receive-record/0' )}}?pid={{$purchaseorder['id']}}">Create GR</a>
+                  <a class="ml-5" href="{{asset('/new-gr' )}}?pid={{$purchaseorder['id']}}">Create GR</a>
                   @endif
                 </td>
               </tr>

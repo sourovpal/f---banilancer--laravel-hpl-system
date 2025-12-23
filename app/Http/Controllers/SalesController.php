@@ -35,98 +35,98 @@ class SalesController extends Controller
     }
 
     public function salesorderList()
-	{
-		$breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Sales Order"], ['name' => "Current Sales Order List"]];
+    {
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Sales Order"], ['name' => "Current Sales Order List"]];
 
-		$pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
+        $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 
-		$date = date("Y-m-d");
-		$data = ['date' => $date];
+        $date = date("Y-m-d");
+        $data = ['date' => $date];
 
-		$internalCompany = $this->internalcompany[0]->name;
-		$externalCompany = $this->externalcompany[0]->name;
+        $internalCompany = $this->internalcompany[0]->name;
+        $externalCompany = $this->externalcompany[0]->name;
 
-		// 初始查詢
-		$salesorder_objs = DB::table('sales_orders')
-			->leftJoin('departments', 'sales_orders.dep_id', '=', 'departments.id')
-			->leftJoin('costcenters', 'sales_orders.cc_id', '=', 'costcenters.id')
-			->leftJoin('users as extusers', 'sales_orders.extuser_id', '=', 'extusers.id')
-			->leftJoin('users as approvers', 'sales_orders.appruser_id', '=', 'approvers.id')
-			->select(
-				'sales_orders.*',
-				'departments.name as department',
-				'costcenters.code as costcentre',
-				'costcenters.name as name_costcentre',
-				'extusers.username as extusername',
-				'approvers.username as approver'
-			)
-			->whereIn('sales_orders.status', [0, 1, 2])
-			->where('sales_orders.no', '!=', '');
+        // 初始查詢
+        $salesorder_objs = DB::table('sales_orders')
+            ->leftJoin('departments', 'sales_orders.dep_id', '=', 'departments.id')
+            ->leftJoin('costcenters', 'sales_orders.cc_id', '=', 'costcenters.id')
+            ->leftJoin('users as extusers', 'sales_orders.extuser_id', '=', 'extusers.id')
+            ->leftJoin('users as approvers', 'sales_orders.appruser_id', '=', 'approvers.id')
+            ->select(
+                'sales_orders.*',
+                'departments.name as department',
+                'costcenters.code as costcentre',
+                'costcenters.name as name_costcentre',
+                'extusers.username as extusername',
+                'approvers.username as approver'
+            )
+            ->whereIn('sales_orders.status', [0, 1, 2])
+            ->where('sales_orders.no', '!=', '');
 
-		// 根據用戶角色進行條件判斷
-		if (auth()->user()->role != 'internal') {
-			$salesorder_objs = $salesorder_objs->where(function ($query) {
-				$userId = auth()->user()->id;  // 獲取當前用戶的 ID
-				// 添加條件，檢查 extuser_id 或 appruser_id 是否等於當前用戶 ID
-				$query->where('sales_orders.extuser_id', $userId)
-					->where('sales_orders.appruser_id', '!=', '1')
-					->orWhere('sales_orders.appruser_id', $userId);
-			});
-		}
+        // 根據用戶角色進行條件判斷
+        if (auth()->user()->role != 'internal') {
+            $salesorder_objs = $salesorder_objs->where(function ($query) {
+                $userId = auth()->user()->id;  // 獲取當前用戶的 ID
+                // 添加條件，檢查 extuser_id 或 appruser_id 是否等於當前用戶 ID
+                $query->where('sales_orders.extuser_id', $userId)
+                    ->where('sales_orders.appruser_id', '!=', '1')
+                    ->orWhere('sales_orders.appruser_id', $userId);
+            });
+        }
 
-		$salesorder_objs = $salesorder_objs
-			->orderBy('sales_orders.created_at', 'DESC')
-			->get();
+        $salesorder_objs = $salesorder_objs
+            ->orderBy('sales_orders.created_at', 'DESC')
+            ->get();
 
-		$salesorders = array();
-		$i = 0;
-		foreach ($salesorder_objs as $salesorder_obj) {
-			// 構建 $salesorders 數組
-			$salesorders[$i]['id'] = $salesorder_obj->id;
-			$salesorders[$i]['no'] = $salesorder_obj->no;
-			$salesorders[$i]['orderdate'] = $salesorder_obj->created_at;
-			$salesorders[$i]['department'] = $salesorder_obj->department;
-			$salesorders[$i]['costcentre'] = $salesorder_obj->costcentre;
-			$salesorders[$i]['name_costcentre'] = $salesorder_obj->name_costcentre;
-			$salesorders[$i]['extusername'] = $salesorder_obj->extusername;
-			$salesorders[$i]['approver'] = $salesorder_obj->approver;
-			$salesorders[$i]['approverdate'] = $salesorder_obj->appr_date;
-			$salesorders[$i]['remarks'] = $salesorder_obj->remarks;
-			$salesorders[$i]['status'] = $salesorder_obj->status;
-			$salesorders[$i]['appruser_id'] = $salesorder_obj->appruser_id;
-			$salesorders[$i]['dep_id'] = $salesorder_obj->dep_id;
-			$salesorders[$i]['extuser_id'] = $salesorder_obj->extuser_id;
+        $salesorders = array();
+        $i = 0;
+        foreach ($salesorder_objs as $salesorder_obj) {
+            // 構建 $salesorders 數組
+            $salesorders[$i]['id'] = $salesorder_obj->id;
+            $salesorders[$i]['no'] = $salesorder_obj->no;
+            $salesorders[$i]['orderdate'] = $salesorder_obj->created_at;
+            $salesorders[$i]['department'] = $salesorder_obj->department;
+            $salesorders[$i]['costcentre'] = $salesorder_obj->costcentre;
+            $salesorders[$i]['name_costcentre'] = $salesorder_obj->name_costcentre;
+            $salesorders[$i]['extusername'] = $salesorder_obj->extusername;
+            $salesorders[$i]['approver'] = $salesorder_obj->approver;
+            $salesorders[$i]['approverdate'] = $salesorder_obj->appr_date;
+            $salesorders[$i]['remarks'] = $salesorder_obj->remarks;
+            $salesorders[$i]['status'] = $salesorder_obj->status;
+            $salesorders[$i]['appruser_id'] = $salesorder_obj->appruser_id;
+            $salesorders[$i]['dep_id'] = $salesorder_obj->dep_id;
+            $salesorders[$i]['extuser_id'] = $salesorder_obj->extuser_id;
 
-			$salesorderitem_objs = DB::table('sales_order_items')
-				->leftJoin('items', 'sales_order_items.item_id', '=', 'items.id')
-				->select('sales_order_items.item_qty as item_qty', 'sales_order_items.remarks as remarks', 'items.*')
-				->where('sales_order_items.so_id', $salesorder_obj->id)
-				->get();
+            $salesorderitem_objs = DB::table('sales_order_items')
+                ->leftJoin('items', 'sales_order_items.item_id', '=', 'items.id')
+                ->select('sales_order_items.item_qty as item_qty', 'sales_order_items.remarks as remarks', 'items.*')
+                ->where('sales_order_items.so_id', $salesorder_obj->id)
+                ->get();
 
-			$salesorderitems = array();
-			$j = 0;
-			foreach ($salesorderitem_objs as $salesorderitem_obj) {
-				$salesorderitems[$j]['id'] = $salesorderitem_obj->id;
-				$salesorderitems[$j]['image'] = $salesorderitem_obj->image;
-				$salesorderitems[$j]['code'] = $salesorderitem_obj->code;
-				$salesorderitems[$j]['name'] = $salesorderitem_obj->name;
-				$salesorderitems[$j]['specification'] = $salesorderitem_obj->specification;
-				$salesorderitems[$j]['unit'] = $salesorderitem_obj->unit;
-				$salesorderitems[$j]['pack'] = $salesorderitem_obj->pack;
-				$salesorderitems[$j]['qty'] = $salesorderitem_obj->item_qty;
-				$salesorderitems[$j]['price'] = $salesorderitem_obj->price;
-				$salesorderitems[$j]['remarks'] = $salesorderitem_obj->remarks;
-				$j++;
-			}
-			$salesorders[$i]['salesorderitems'] = $salesorderitems;
+            $salesorderitems = array();
+            $j = 0;
+            foreach ($salesorderitem_objs as $salesorderitem_obj) {
+                $salesorderitems[$j]['id'] = $salesorderitem_obj->id;
+                $salesorderitems[$j]['image'] = $salesorderitem_obj->image;
+                $salesorderitems[$j]['code'] = $salesorderitem_obj->code;
+                $salesorderitems[$j]['name'] = $salesorderitem_obj->name;
+                $salesorderitems[$j]['specification'] = $salesorderitem_obj->specification;
+                $salesorderitems[$j]['unit'] = $salesorderitem_obj->unit;
+                $salesorderitems[$j]['pack'] = $salesorderitem_obj->pack;
+                $salesorderitems[$j]['qty'] = $salesorderitem_obj->item_qty;
+                $salesorderitems[$j]['price'] = $salesorderitem_obj->price;
+                $salesorderitems[$j]['remarks'] = $salesorderitem_obj->remarks;
+                $j++;
+            }
+            $salesorders[$i]['salesorderitems'] = $salesorderitems;
 
-			$i++;
-		}
+            $i++;
+        }
 
-		return view('pages.page-sales-list', compact('pageConfigs', 'breadcrumbs', 'data', 'salesorders', 'internalCompany', 'externalCompany'));
-	}
+        return view('pages.page-sales-list', compact('pageConfigs', 'breadcrumbs', 'data', 'salesorders', 'internalCompany', 'externalCompany'));
+    }
 
-    public function salesorderCreate($id)
+    public function salesorderCreate($id = 0)
     {
         $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Sales Order"], ['name' => "Create Sales Order Record"]];
 
@@ -338,31 +338,31 @@ class SalesController extends Controller
             $lastSalesOrder->appruser_id = $approverId;
             $lastSalesOrder->save();
 
-            return redirect('/current-sales-order-list');
+            return redirect('/my-order');
         }
 
         return redirect()->back()->with('error', 'Invalid operation.');
     }
 
-	public function approveSales(Request $request, $id)
-	{
-		// 查找指定ID的銷售訂單
-		$salesOrder = SalesOrder::find($id);
+    public function approveSales(Request $request, $id)
+    {
+        // 查找指定ID的銷售訂單
+        $salesOrder = SalesOrder::find($id);
 
-		// 檢查該銷售訂單是否存在
-		if ($salesOrder) {
-			// 更新該訂單的狀態為1
-			$salesOrder->status = 1;
-			// 保存更新
-			$salesOrder->save();
+        // 檢查該銷售訂單是否存在
+        if ($salesOrder) {
+            // 更新該訂單的狀態為1
+            $salesOrder->status = 1;
+            // 保存更新
+            $salesOrder->save();
 
-			// 返回成功訊息
-			return redirect('/current-sales-order-list');
-		}
+            // 返回成功訊息
+            return redirect('/my-order');
+        }
 
-		// 如果訂單不存在，返回錯誤訊息
-		//return response()->json(['message' => 'Sales order not found.'], 404);
-	}
+        // 如果訂單不存在，返回錯誤訊息
+        //return response()->json(['message' => 'Sales order not found.'], 404);
+    }
 
 
 
@@ -452,7 +452,7 @@ class SalesController extends Controller
         $salesorderitem_objs->save();
     }
 
-    public function salesorderReport($status)
+    public function salesorderReport($status = "initial")
     {
         $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Sales Order"], ['name' => "Sales Order Report"]];
 
@@ -789,7 +789,7 @@ class SalesController extends Controller
             }
         }
 
-        return redirect('/sales-order-report/' . $salesorderreport->rep_code);
+        return redirect('/order-history/' . $salesorderreport->rep_code);
     }
 
     public function salesorderRegister(Request $request)
@@ -804,7 +804,7 @@ class SalesController extends Controller
         $salesorder = SalesOrder::find($so_id);
 
 
-        $nodate = date('Ymd');
+        $nodate = date('ymd');
         $code = '';
         if ($so_id / 10 < 1) $code = '000' . $so_id;
         else if ($so_id / 100 < 1) $code = '00' . $so_id;
@@ -880,7 +880,7 @@ class SalesController extends Controller
             } catch (Exception $e) {
             }
         }
-        return redirect('/current-sales-order-list');
+        return redirect('/my-order');
     }
 
     public function soItems(Request $request)
@@ -897,7 +897,7 @@ class SalesController extends Controller
             $salesorderitems[$j]['id'] = $salesorderitem_obj->id;
             $salesorderitems[$j]['code'] = $salesorderitem_obj->code;
             $salesorderitems[$j]['name'] = $salesorderitem_obj->name;
-            $salesorderitems[$j]['specification'] = isset($salesorderitem_obj->specification) ? $salesorderitem_obj->specification :'';
+            $salesorderitems[$j]['specification'] = isset($salesorderitem_obj->specification) ? $salesorderitem_obj->specification : '';
             $salesorderitems[$j]['unit'] = $salesorderitem_obj->unit;
             $salesorderitems[$j]['pack'] = $salesorderitem_obj->pack;
             $salesorderitems[$j]['qty'] = $salesorderitem_obj->item_qty;
@@ -907,7 +907,6 @@ class SalesController extends Controller
         }
         $result = ['result' => 'success', 'items' => $salesorderitems];
         return response()->json($result);
-
     }
 
     public function saveItems(Request $request)

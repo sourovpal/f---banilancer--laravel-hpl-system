@@ -2,7 +2,7 @@
 @extends('layouts.contentLayoutMaster')
 
 {{-- page title --}}
-@section('title','External Company Information')
+@section('title','External')
 
 {{-- vendor styles --}}
 @section('vendor-style')
@@ -22,7 +22,7 @@
   <div class="card">
     <div class="card-content">
       <div class="media display-flex align-items-center mb-2">
-        <h5 class="media-heading mt-0">External Company Information</h5>
+        <h5 class="media-heading mt-0">External Company</h5>
       </div>
       <form id="externalCompanyInformationForm" class="userForm" action="/company_information_update" method="post" enctype="multipart/form-data">
         {{ csrf_field() }}

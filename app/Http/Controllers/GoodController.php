@@ -92,7 +92,7 @@ class GoodController extends Controller
         return view('pages.page-good-list', compact('pageConfigs', 'internalCompany', 'externalCompany', 'breadcrumbs', 'goodreceives'));
     }
 
-    public function goodreceiverCreate(Request $request, $id)
+    public function goodreceiverCreate(Request $request, $id = 0)
     {
 
         $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Good Receiver"], ['name' => "Create Good Receiver Record"]];
@@ -147,47 +147,47 @@ class GoodController extends Controller
     }
 
     public function createGoodsReceive(Request $request)
-	{
-		$supplier = $request->supplier;
-		$remarks = $request->remarks;
-		$gr_id = $request->gr_id;
-		$items = $request->items;
+    {
+        $supplier = $request->supplier;
+        $remarks = $request->remarks;
+        $gr_id = $request->gr_id;
+        $items = $request->items;
 
-		$goodreceive = new GoodReceive();
-		$goodreceive->userint_id = Auth::id();
-		$goodreceive->sup_id = $supplier;
-		$goodreceive->remarks = $remarks;
-		$goodreceive->status = 0;
+        $goodreceive = new GoodReceive();
+        $goodreceive->userint_id = Auth::id();
+        $goodreceive->sup_id = $supplier;
+        $goodreceive->remarks = $remarks;
+        $goodreceive->status = 0;
 
-		if ($goodreceive->save()) {
-			$code = str_pad($gr_id, 4, '0', STR_PAD_LEFT);
-			$goodreceive->gr_no = 'CS-GR-' . date('Ymd') . $code;
-			$goodreceive->save();
-			$gr_id = $goodreceive->id;
+        if ($goodreceive->save()) {
+            $code = str_pad($gr_id, 4, '0', STR_PAD_LEFT);
+            $goodreceive->gr_no = 'CS-GR-' . date('Ymd') . $code;
+            $goodreceive->save();
+            $gr_id = $goodreceive->id;
 
-			DB::table('good_receive_items')->where('gr_id', $gr_id)->delete();
+            DB::table('good_receive_items')->where('gr_id', $gr_id)->delete();
 
-			foreach ($items as $item) {
-				if ($item['qty']) {
-					$goodreceiveitem = new GoodReceiveItem();
-					$goodreceiveitem->gr_id = $gr_id;
-					$goodreceiveitem->sup_id = $supplier;
-					$goodreceiveitem->item_id = $item['id'];
-					$goodreceiveitem->item_qty = $item['qty'];
-					$goodreceiveitem->item_cost = $item['cost']; // 確保這裡是 'cost' 而不是 'price'
-					$goodreceiveitem->remarks = $item['specification'];
-					$goodreceiveitem->status = 0;
-					$goodreceiveitem->save();
+            foreach ($items as $item) {
+                if ($item['qty']) {
+                    $goodreceiveitem = new GoodReceiveItem();
+                    $goodreceiveitem->gr_id = $gr_id;
+                    $goodreceiveitem->sup_id = $supplier;
+                    $goodreceiveitem->item_id = $item['id'];
+                    $goodreceiveitem->item_qty = $item['qty'];
+                    $goodreceiveitem->item_cost = $item['cost']; // 確保這裡是 'cost' 而不是 'price'
+                    $goodreceiveitem->remarks = $item['specification'];
+                    $goodreceiveitem->status = 0;
+                    $goodreceiveitem->save();
 
-					$itemModel = Item::find($item['id']);
-					$itemModel->stock += $item['qty'];
-					$itemModel->save();
-				}
-			}
+                    $itemModel = Item::find($item['id']);
+                    $itemModel->stock += $item['qty'];
+                    $itemModel->save();
+                }
+            }
 
-			return response()->json(['result' => 'success']);
-		}
-	}
+            return response()->json(['result' => 'success']);
+        }
+    }
 
     public function goodreceiverComplete($id)
     {
@@ -195,7 +195,7 @@ class GoodController extends Controller
         $gr->status = 1;
         $gr->save();
 
-        return redirect('/current-good-receive-list');
+        return redirect('/current-gr');
     }
 
     public function goodreceiverCancel($id)
@@ -204,7 +204,7 @@ class GoodController extends Controller
         $gr->status = 2;
         $gr->save();
 
-        return redirect('/current-good-receive-list');
+        return redirect('/current-gr');
     }
 
     public function goodreceiverUpdate($id)
@@ -265,7 +265,7 @@ class GoodController extends Controller
         return view('pages.page-good-update', compact('pageConfigs', 'internalCompany', 'externalCompany', 'breadcrumbs', 'data', 'suppliers', 'categories', 'gr'));
     }
 
-    public function goodreceiverReport($status)
+    public function goodreceiverReport($status = "initial")
     {
         $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Good Receiver"], ['name' => "Good Receiver Report"]];
 
@@ -476,7 +476,7 @@ class GoodController extends Controller
             }
         }
 
-        return redirect('/good-receive-report/' . $goodreceivereport->rep_code);
+        return redirect('/gr-history/' . $goodreceivereport->rep_code);
     }
 
     public function saveGRItems(Request $request)
@@ -534,14 +534,14 @@ class GoodController extends Controller
 
         $goodreceive = GoodReceive::find($gr_id);
 
-        $grdate = date('Ymd');
+        $grdate = date('ymd');
         $code = '';
         if ($gr_id / 10 < 1) $code = '000' . $gr_id;
         else if ($gr_id / 100 < 1) $code = '00' . $gr_id;
         else if ($gr_id / 1000 < 1) $code = '0' . $gr_id;
         else $code = $gr_id;
 
-        $goodreceive->gr_no = 'CS-GR-' . $grdate . $code;
+        $goodreceive->gr_no = 'GR-' . $grdate . $code;
         $goodreceive->sup_id = $supplier;
         $goodreceive->remarks = $remarks;
         $goodreceive->status = $status;
@@ -549,7 +549,7 @@ class GoodController extends Controller
         $goodreceive->save();
 
 
-        return redirect('/current-good-receive-list');
+        return redirect('/current-gr');
     }
 
     public function getReports(Request $request)
@@ -638,6 +638,6 @@ class GoodController extends Controller
 
     public function printExcel()
     {
-        return Excel::download(new GoodReceiveReportsExport('',''), 'goodreceivereport_' . date('Ymdhms') . '.xlsx');
+        return Excel::download(new GoodReceiveReportsExport('', ''), 'goodreceivereport_' . date('Ymdhms') . '.xlsx');
     }
 }

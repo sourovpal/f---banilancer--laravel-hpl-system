@@ -10,30 +10,30 @@
     },
     {
       "url": "javascript:void(0)",
-      "name": "Sales Order",
-      "i18n": "Sales Order",
+      "name": "Order Information",
+      "i18n": "Order Information",
       "class": "collapsible-header waves-effect waves-cyan sales_order_menu",
       "slug": "sales-order",
       "icon": "receipt",
       "submenu": [
         {
-          "url": "current-sales-order-list",
-          "name": "Current Sales Order List",
-          "i18n": "Current Sales Order List",
-          "slug": "current-sales-order-list"
+          "url": "my-order",
+          "name": "My Order",
+          "i18n": "My Order",
+          "slug": "my-order"
         },
         {
-          "url": "create-sales-order-record/0",
-          "name": "Create Sales Order Record",
-          "i18n": "Create Sales Order Record",
-          "slug": "create-sales-order-record",
+          "url": "new-request",
+          "name": "New Request",
+          "i18n": "New Request",
+          "slug": "new-request",
           "class": "sales_order_create_menu"
         },
         {
-          "url": "sales-order-report/initial",
-          "name": "Sales Order Report",
-          "i18n": "Sales Order Report",
-          "slug": "sales-order-report"
+          "url": "order-history",
+          "name": "Order History",
+          "i18n": "Order History",
+          "slug": "order-history"
         }
       ]
     },
@@ -46,16 +46,16 @@
       "icon": "receipt",
       "submenu": [
         {
-          "url": "current-delivery-note-list",
-          "name": "Current Delivery Note List",
-          "i18n": "Current Delivery Note List",
-          "slug": "current-delivery-note-list"
+          "url": "current-dn",
+          "name": "Current DN",
+          "i18n": "Current DN",
+          "slug": "current-dn"
         },
         {
-          "url": "delivery-note-report/initial",
-          "name": "Delivery Note Report",
-          "i18n": "Delivery Note Report",
-          "slug": "delivery-note-report"
+          "url": "dn-history",
+          "name": "DN History",
+          "i18n": "DN History",
+          "slug": "dn-history"
         }
       ]
     },
@@ -68,22 +68,22 @@
       "icon": "receipt",
       "submenu": [
         {
-          "url": "current-purchase-order-list",
-          "name": "Current Purchase Order List",
-          "i18n": "Current Purchase Order List",
-          "slug": "current-purchase-order-list"
+          "url": "current-po",
+          "name": "Current PO",
+          "i18n": "Current PO",
+          "slug": "current-po"
         },
         {
-          "url": "create-purchase-order-record/0",
-          "name": "Create Purchase Order",
-          "i18n": "Create Purchase Order Record",
-          "slug": "create-purchase-order-record"
+          "url": "new-po",
+          "name": "New PO",
+          "i18n": "New PO",
+          "slug": "new-po"
         },
         {
-          "url": "purchase-order-report/initial",
-          "name": "Purchase Order Report",
-          "i18n": "Purchase Order Report",
-          "slug": "purchase-order-report"
+          "url": "po-history",
+          "name": "PO History",
+          "i18n": "PO History",
+          "slug": "po-history"
         }
       ]
     },
@@ -96,22 +96,22 @@
       "icon": "receipt",
       "submenu": [
         {
-          "url": "current-good-receive-list",
-          "name": "Current Good Receive List",
-          "i18n": "Current Good Receive List",
-          "slug": "current-good-receive-list"
+          "url": "current-gr",
+          "name": "Current GR",
+          "i18n": "Current GR",
+          "slug": "current-gr"
         },
         {
-          "url": "create-good-receive-record/0",
-          "name": "Create Good Receive Record",
-          "i18n": "Create Good Receive Record",
-          "slug": "create-good-receive-record"
+          "url": "new-gr",
+          "name": "New GR",
+          "i18n": "New GR",
+          "slug": "new-gr"
         },
         {
-          "url": "good-receive-report/initial",
-          "name": "Good Receive Report",
-          "i18n": "Good Receive Report",
-          "slug": "good-receive-report"
+          "url": "gr-history",
+          "name": "GR History",
+          "i18n": "GR History",
+          "slug": "gr-history"
         }
       ]
     },
@@ -130,10 +130,10 @@
           "slug": "category-list"
         },
         {
-          "url": "create-category-record",
-          "name": "Create Category Record",
-          "i18n": "Create Category Record",
-          "slug": "create-category-record"
+          "url": "new-category",
+          "name": "New Category",
+          "i18n": "New Category",
+          "slug": "new-category"
         },
         {
           "url": "item-list",
@@ -142,16 +142,16 @@
           "slug": "item-list"
         },
         {
-          "url": "create-item-record",
-          "name": "Create Item Record",
-          "i18n": "Create Item Record",
-          "slug": "create-item-record"
+          "url": "new-item",
+          "name": "New Item",
+          "i18n": "New Item",
+          "slug": "new-item"
         },
         {
-          "url": "item-transaction-report",
-          "name": "Item Transaction Report",
-          "i18n": "Item Transaction Report",
-          "slug": "item-transaction-report"
+          "url": "item-transaction",
+          "name": "Item Transaction",
+          "i18n": "Item Transaction",
+          "slug": "item-transaction"
         }
       ]
     },
@@ -170,10 +170,10 @@
           "slug": "supplier-list"
         },
         {
-          "url": "create-supplier-record",
-          "name": "Create Supplier Record",
-          "i18n": "Create Supplier Record",
-          "slug": "create-supplier-record"
+          "url": "new-supplier",
+          "name": "New Supplier",
+          "i18n": "New Supplier",
+          "slug": "new-supplier"
         }
       ]
     },
@@ -186,21 +186,21 @@
       "icon": "receipt",
       "submenu": [
         {
-          "url": "current-quotation-list",
-          "name": "Current Quotation List",
-          "i18n": "Current Quotation List",
-          "slug": "current-quotation-list"
+          "url": "current-quotation",
+          "name": "Current Quotation",
+          "i18n": "Current Quotation",
+          "slug": "current-quotation"
         },
         {
-          "url": "create-quotation-record/0",
-          "name": "Create Quotation Record",
-          "i18n": "Create Quotation Record",
-          "slug": "create-quotation-record"
+          "url": "new-quotation",
+          "name": "New Quotation",
+          "i18n": "New Quotation",
+          "slug": "new-quotation"
         },
         {
-          "url": "quotation-report/initial",
-          "name": "Quotation Report",
-          "i18n": "Quotation Report",
+          "url": "quotation-report",
+          "name": "Quotation History",
+          "i18n": "Quotation History",
           "slug": "quotation-report"
         }
       ]
@@ -272,16 +272,16 @@
       "icon": "receipt",
       "submenu": [
         {
-          "url": "internal-company-information",
-          "name": "Internal Company",
-          "i18n": "Internal Company",
-          "slug": "internal-company-information"
+          "url": "internal",
+          "name": "Internal",
+          "i18n": "Internal",
+          "slug": "internal"
         },
         {
-          "url": "external-company-information",
-          "name": "External Company",
-          "i18n": "External Company",
-          "slug": "external-company-information"
+          "url": "external",
+          "name": "External",
+          "i18n": "External",
+          "slug": "external"
         }
       ]
     },
@@ -312,10 +312,10 @@
           "slug": "external-users-list"
         },
         {
-          "url": "page-users-create",
-          "name": "Create User Record",
-          "i18n": "Create User Record",
-          "slug": "create-user-record"
+          "url": "new-user",
+          "name": "New User",
+          "i18n": "New User",
+          "slug": "new-user"
         }
       ]
     },
@@ -334,10 +334,10 @@
           "slug": "department-list"
         },
         {
-          "url": "create-department-record",
-          "name": "Create Department Record",
-          "i18n": "Create Department Record",
-          "slug": "create-department-record"
+          "url": "new-department",
+          "name": "New Department",
+          "i18n": "New Department",
+          "slug": "new-department"
         },
         {
           "url": "costcenter-list",
@@ -346,10 +346,10 @@
           "slug": "costcenter-list"
         },
         {
-          "url": "create-costcenter-record",
-          "name": "Create Costcenter Record",
-          "i18n": "Create Costcenter Record",
-          "slug": "create-costcenter-record"
+          "url": "new-costcenter",
+          "name": "New Costcenter",
+          "i18n": "New Costcenter",
+          "slug": "new-costcenter"
         }
       ]
     }

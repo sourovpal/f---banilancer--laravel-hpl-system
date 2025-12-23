@@ -2,7 +2,7 @@
 @extends('layouts.contentLayoutMaster')
 
 {{-- page title --}}
-@section('title','Create Item Record')
+@section('title','Create New Item')
 
 {{-- vendor styles --}}
 @section('vendor-style')

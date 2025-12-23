@@ -115,7 +115,7 @@ Route::get('/page-external-users-list', [UserController::class, 'externalusersLi
 Route::get('/page-users-view', [UserController::class, 'usersView']);
 Route::get('/page-users-edit/{id}', [UserController::class, 'usersEdit']);
 Route::get('/page-users-delete/{id}', [UserController::class, 'userDelete']);
-Route::get('/page-users-create', [UserController::class, 'usersCreate']);
+Route::get('/new-user', [UserController::class, 'usersCreate']);
 Route::post('/user_register', [UserController::class, 'userRegister']);
 Route::post('/user_update', [UserController::class, 'userUpdateAction']);
 
@@ -127,11 +127,11 @@ Route::get('/user-forgot-password', [AuthenticationController::class, 'forgotPas
 Route::get('/user-lock-screen', [AuthenticationController::class, 'lockScreen']);
 
 // Sale Order Route
-Route::get('/current-sales-order-list', [SalesController::class, 'salesorderList']);
-Route::get('/create-sales-order-record/{id}', [SalesController::class, 'salesorderCreate']);
+Route::get('/my-order', [SalesController::class, 'salesorderList']);
+Route::get('/new-request/{id?}', [SalesController::class, 'salesorderCreate']);
 Route::get('/create-sales-order-record-overtotal', [SalesController::class, 'salesorderCreate']);
 Route::get('/update-sales-order-record/{id}', [SalesController::class, 'salesorderUpdate']);
-Route::get('/sales-order-report/{status}', [SalesController::class, 'salesorderReport']);
+Route::get('/order-history/{status?}', [SalesController::class, 'salesorderReport']);
 Route::get('/special-sales-order-handling/{id}', [SalesController::class, 'salesorderSpecialhandling']);
 Route::post('/registerItems', [SalesController::class, 'registerItems']);
 Route::post('/so-itemUpdate', [SalesController::class, 'salesorderItemUpdate']);
@@ -150,10 +150,10 @@ Route::get('/printExcelSalesOrder', [SalesController::class, 'printExcel']);
 Route::get('/update-sales-approve/{id}', [SalesController::class, 'approveSales'])->name('sales.approve');
 
 // Delivery Note Route
-Route::get('/current-delivery-note-list', [DeliveryController::class, 'deliverynoteList']);
+Route::get('/current-dn', [DeliveryController::class, 'deliverynoteList']);
 Route::get('/create-delivery-note-record', [DeliveryController::class, 'deliverynoteCreate']);
 Route::get('/update-delivery-note-record/{id}', [DeliveryController::class, 'deliverynoteUpdate']);
-Route::get('/delivery-note-report/{status}', [DeliveryController::class, 'deliverynoteReport']);
+Route::get('/dn-history/{status?}', [DeliveryController::class, 'deliverynoteReport']);
 Route::get('/special-delivery-note-handling/{id}', [DeliveryController::class, 'deliverynoteSpecialhandling']);
 Route::get('/create-deliver-note/{id}', [DeliveryController::class, 'createDelivernote']);
 Route::get('/create-deliver-note-from-quotation/{id}', [DeliveryController::class, 'createDelivernoteFromQuotation']);
@@ -166,10 +166,10 @@ Route::get('/printPdfDeliveryNote/{id}', [DeliveryController::class, 'printPdf']
 Route::get('/printExcelDeliveryNote', [DeliveryController::class, 'printExcel'])->name('delivery-report-excel.export');
 
 // Purchase Order Route
-Route::get('/current-purchase-order-list', [PurchaseController::class, 'purchaseorderList']);
-Route::get('/create-purchase-order-record/{id}', [PurchaseController::class, 'purchaseorderCreate']);
+Route::get('/current-po', [PurchaseController::class, 'purchaseorderList']);
+Route::get('/new-po/{id?}', [PurchaseController::class, 'purchaseorderCreate']);
 Route::get('/update-purchase-order-record/{id}', [PurchaseController::class, 'purchaseorderUpdate']);
-Route::get('/purchase-order-report/{status}', [PurchaseController::class, 'purchaseorderReport']);
+Route::get('/po-history/{status?}', [PurchaseController::class, 'purchaseorderReport']);
 Route::post('/purchaseorder_register', [PurchaseController::class, 'purchaseorderRegister']);
 Route::post('/purchaseorder_itemUpdate', [PurchaseController::class, 'purchaseorderItemUpdate']);
 Route::post('/purchaseorder_create', [PurchaseController::class, 'createPurchaseOrder']);
@@ -202,11 +202,11 @@ Route::prefix('report')->group(function () {
 });
 
 // Good Receive Route
-Route::get('/current-good-receive-list', [GoodController::class, 'goodreceiverList']);
-Route::get('/create-good-receive-record/{id}', [GoodController::class, 'goodreceiverCreate']);
+Route::get('/current-gr', [GoodController::class, 'goodreceiverList']);
+Route::get('/new-gr/{id}', [GoodController::class, 'goodreceiverCreate']);
 Route::get('/update-good-receive-record/{id}', [GoodController::class, 'goodreceiverUpdate']);
-Route::get('/good-receive-report/{status}', [GoodController::class, 'goodreceiverReport']);
-Route::post('/create-good-receive-record', [GoodController::class, 'createGoodsReceive']);
+Route::get('/gr-history/{status}', [GoodController::class, 'goodreceiverReport']);
+Route::post('/new-gr', [GoodController::class, 'createGoodsReceive']);
 Route::get('/special-good-receive-handling/{id}', [GoodController::class, 'goodreceiveSpecialhandling']);
 Route::post('/saveGRItems', [GoodController::class, 'saveGRItems']);
 Route::post('/goodreceive_register', [GoodController::class, 'goodreceiveRegister']);
@@ -218,30 +218,30 @@ Route::get('/printExcelGoodReceive', [GoodController::class, 'printExcel']);
 
 // Category Route
 Route::get('/category-list', [CategoryController::class, 'categoryList']);
-Route::get('/create-category-record', [CategoryController::class, 'categoryCreate']);
+Route::get('/new-category', [CategoryController::class, 'categoryCreate']);
 Route::get('/update-category-record/{id}', [CategoryController::class, 'categoryUpdate']);
 Route::post('/category_register', [CategoryController::class, 'categoryRegister']);
 Route::post('/category_update', [CategoryController::class, 'categoryUpdateAction']);
 
 // Department Route
 Route::get('/department-list', [DepartmentController::class, 'departmentList']);
-Route::get('/create-department-record', [DepartmentController::class, 'departmentCreate']);
+Route::get('/new-department', [DepartmentController::class, 'departmentCreate']);
 Route::get('/update-department-record/{id}', [DepartmentController::class, 'departmentUpdate']);
 Route::post('/department_register', [DepartmentController::class, 'departmentRegister']);
 Route::post('/department_update', [DepartmentController::class, 'departmentUpdateAction']);
 
 // Costcenter Route
 Route::get('/costcenter-list', [CostcenterController::class, 'costcenterList']);
-Route::get('/create-costcenter-record', [CostcenterController::class, 'costcenterCreate']);
+Route::get('/new-costcenter', [CostcenterController::class, 'costcenterCreate']);
 Route::get('/update-costcenter-record/{id}', [CostcenterController::class, 'costcenterUpdate']);
 Route::post('/costcenter_register', [CostcenterController::class, 'costcenterRegister']);
 Route::post('/costcenter_update', [CostcenterController::class, 'costcenterUpdateAction']);
 
 // Item Route
 Route::get('/item-list', [ItemController::class, 'itemList']);
-Route::get('/create-item-record', [ItemController::class, 'itemCreate']);
+Route::get('/new-item', [ItemController::class, 'itemCreate']);
 Route::get('/update-item-record/{id}', [ItemController::class, 'itemUpdate']);
-Route::get('/item-transaction-report', [ItemController::class, 'itemtransactionReport']);
+Route::get('/item-transaction', [ItemController::class, 'itemtransactionReport']);
 Route::post('/item_register', [ItemController::class, 'itemRegister']);
 Route::post('/item_update', [ItemController::class, 'itemUpdateAction']);
 Route::post('/item_remark_update', [ItemController::class, 'updateItemRemarks']);
@@ -249,20 +249,20 @@ Route::get('/getItems', [ItemController::class, 'getItems']);
 
 // Supplier Route
 Route::get('/supplier-list', [SupplierController::class, 'supplierList']);
-Route::get('/create-supplier-record', [SupplierController::class, 'supplierCreate']);
+Route::get('/new-supplier', [SupplierController::class, 'supplierCreate']);
 Route::get('/update-supplier-record/{id}', [SupplierController::class, 'supplierUpdate']);
 Route::post('/supplier_register', [SupplierController::class, 'supplierRegister']);
 Route::post('/supplier_update', [SupplierController::class, 'supplierUpdateAction']);
 
 // Quotation Route
-Route::get('/current-quotation-list', [QuotationController::class, 'quotationList']);
-Route::get('/create-quotation-record/{id}', [QuotationController::class, 'quotationCreate']);
+Route::get('/current-quotation', [QuotationController::class, 'quotationList']);
+Route::get('/new-quotation/{id?}', [QuotationController::class, 'quotationCreate']);
 Route::get('/update-quotation-record/{id}', [QuotationController::class, 'quotationUpdate']);
-Route::get('/quotation-report/{status}', [QuotationController::class, 'quotationReport']);
+Route::get('/quotation-report/{status?}', [QuotationController::class, 'quotationReport']);
 Route::post('/quotationitem_add', [QuotationController::class, 'quotationItemRegister']);
 Route::get('/quotation_item_delete/{id}', [QuotationController::class, 'quotationItemDelete']);
 Route::post('/quotation_register', [QuotationController::class, 'quotationRegister']);
-Route::post('/quotationItemUpdate', [QuotationController::class, 'quotationItemUpdate']);
+Route::post('/quotationItemUpdate', [QuotationController::class, 'quotationIui3temUpdate']);
 Route::post('/getQuotationReports', [QuotationController::class, 'getReports']);
 Route::post('/saveItemsQuotation', [QuotationController::class, 'saveItemsQuotation']);
 Route::get('/getQuotationItems', [QuotationController::class, 'getQuotationItems']);
@@ -274,8 +274,8 @@ Route::post('/quotation-list-render', [QuotationController::class, 'quotationLis
 
 Route::get('/quotation_create_process', [QuotationController::class, 'createQuotationOrder_process']);
 
-Route::get('/internal-company-information', [CompanyInformationController::class, 'showInternalCompany']);
-Route::get('/external-company-information', [CompanyInformationController::class, 'showExternalCompany']);
+Route::get('/internal', [CompanyInformationController::class, 'showInternalCompany']);
+Route::get('/external', [CompanyInformationController::class, 'showExternalCompany']);
 Route::post('/company_information_update', [CompanyInformationController::class, 'updateCompanyInformation']);
 
 // Misc Route

@@ -2,7 +2,7 @@
 @extends('layouts.contentLayoutMaster')
 
 {{-- page title --}}
-@section('title','Create Category Record')
+@section('title','New Category')
 
 {{-- vendors styles --}}
 @section('vendor-style')
