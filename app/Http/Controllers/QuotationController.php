@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use PDF, Redirect;
 use App\Exports\QuotationReportsExport;
+use App\Helpers\Helper;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\InternalCompany;
@@ -452,7 +453,7 @@ class QuotationController extends Controller
         return redirect('/new-quotation/' . $request->data["qn_id"]);
     }
 
-    public function quotationReport($status)
+    public function quotationReport($status = "initial")
     {
         $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Small Order"], ['name' => "Small Order Report"]];
 
@@ -619,7 +620,7 @@ class QuotationController extends Controller
         $remarks = $request->remarks;
 
         $quotation = Quotation::find($qn_id);
-        $quotation->code = 'QSM-' . date('ymd') . $qn_id;
+        $quotation->code = Helper::getSerialNumber($quotation->getTable(), 'code', 'QSM-');
         // $quotation -> dep_id = 1;
         if (auth()->user()->role == 'external') {
             $quotation->userext_id = Auth::id();

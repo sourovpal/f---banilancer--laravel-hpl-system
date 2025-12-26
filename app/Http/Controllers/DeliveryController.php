@@ -18,6 +18,7 @@ use App\Models\ItemTransaction;
 use PDF;
 use Illuminate\Http\Request;
 use App\Exports\DeliveryNoteReportsExport;
+use App\Helpers\Helper;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\InternalCompany;
 use App\Models\ExternalCompany;
@@ -152,10 +153,10 @@ class DeliveryController extends Controller
 
         $deliverynote->save();
 
-        return redirect('/current-delivery-note-list');
+        return redirect('/current-dn');
     }
 
-    public function deliverynoteReport($status = "initial", Request $request)
+    public function deliverynoteReport(Request $request, $status = "initial")
     {
         $to    = '';
         $from    = '';
@@ -674,7 +675,7 @@ class DeliveryController extends Controller
             }
         }
 
-        return redirect('/delivery-note-report/' . $deliverynotereport->rep_code);
+        return redirect('/dn-history/' . $deliverynotereport->rep_code);
     }
 
     public function createDelivernote($id)
@@ -690,21 +691,9 @@ class DeliveryController extends Controller
         $deliverynote->userext_id = $salesorder->extuser_id;
         $deliverynote->userint_id = auth()->user()->id;
         $deliverynote->status = 0;
-
+        $deliverynote->no = Helper::getSerialNumber($deliverynote->getTable(), 'no', 'CS-DN-');
         $deliverynote->save();
 
-        $dn_id = $deliverynote->id;
-
-        $nodate = date('ymd');
-        $code = '';
-        if ($dn_id / 10 < 1) $code = '000' . $dn_id;
-        else if ($dn_id / 100 < 1) $code = '00' . $dn_id;
-        else if ($dn_id / 1000 < 1) $code = '0' . $dn_id;
-        else $code = $dn_id;
-
-        $deliverynote->no = 'CS-DN-' . $nodate . $code;
-
-        $deliverynote->save();
 
         $salesorder->status = 2; // waiting for deliver
         $salesorder->dn_id = $deliverynote->id;
@@ -713,7 +702,7 @@ class DeliveryController extends Controller
 
         $salesorder->save();
 
-        return redirect('/current-delivery-note-list');
+        return redirect('/current-dn');
     }
 
     public function createDelivernoteFromQuotation($id)
@@ -729,20 +718,7 @@ class DeliveryController extends Controller
         $deliverynote->userext_id = $quotation->userext_id;
         $deliverynote->userint_id = auth()->user()->id;
         $deliverynote->status = 0;
-
-        $deliverynote->save();
-
-        $dn_id = $deliverynote->id;
-
-        $nodate = date('ymd');
-        $code = '';
-        if ($dn_id / 10 < 1) $code = '000' . $dn_id;
-        else if ($dn_id / 100 < 1) $code = '00' . $dn_id;
-        else if ($dn_id / 1000 < 1) $code = '0' . $dn_id;
-        else $code = $dn_id;
-
-        $deliverynote->no = 'CS-DN-' . $nodate . $code;
-
+        $deliverynote->no = Helper::getSerialNumber($deliverynote->getTable(), 'no', 'CS-DN-');
         $deliverynote->save();
 
         $quotation->status = 1; // waiting for deliver
@@ -752,7 +728,7 @@ class DeliveryController extends Controller
 
         $quotation->save();
 
-        return redirect('/current-delivery-note-list');
+        return redirect('/current-dn');
     }
 
     public function makeDelivery($id)
@@ -774,7 +750,7 @@ class DeliveryController extends Controller
             $quotation->save();
         }
 
-        return redirect('/current-delivery-note-list');
+        return redirect('/current-dn');
     }
 
     public function printPdf($id)

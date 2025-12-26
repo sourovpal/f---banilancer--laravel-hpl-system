@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Exports\PurchaseOrderReportsExport;
+use App\Helpers\Helper;
 use App\Models\ExternalCompany;
 use App\Models\InternalCompany;
 use App\Models\Item;
@@ -451,12 +452,7 @@ class PurchaseController extends Controller
 
         if ($purchaseorder->save()) {
             $po_id = $purchaseorder->id;
-            $code = '';
-            if ($po_id / 10 < 1) $code = '000' . $po_id;
-            else if ($po_id / 100 < 1) $code = '00' . $po_id;
-            else if ($po_id / 1000 < 1) $code = '0' . $po_id;
-            else $code = $po_id;
-            $purchaseorder->po_no = 'PO-' . $podate . $code;
+            $purchaseorder->po_no = Helper::getSerialNumber($purchaseorder->getTable(), 'po_no', 'PO-');
             $purchaseorder->save();
 
             DB::table('purchase_order_items')->where('po_id', $po_id)->delete();

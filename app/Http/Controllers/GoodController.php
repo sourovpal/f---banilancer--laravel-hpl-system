@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use PDF;
 use App\Exports\GoodReceiveReportsExport;
+use App\Helpers\Helper;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\InternalCompany;
 use App\Models\ExternalCompany;
@@ -152,7 +153,6 @@ class GoodController extends Controller
         $remarks = $request->remarks;
         $gr_id = $request->gr_id;
         $items = $request->items;
-
         $goodreceive = new GoodReceive();
         $goodreceive->userint_id = Auth::id();
         $goodreceive->sup_id = $supplier;
@@ -160,8 +160,8 @@ class GoodController extends Controller
         $goodreceive->status = 0;
 
         if ($goodreceive->save()) {
-            $code = str_pad($gr_id, 4, '0', STR_PAD_LEFT);
-            $goodreceive->gr_no = 'CS-GR-' . date('Ymd') . $code;
+
+            $goodreceive->gr_no = Helper::getSerialNumber($goodreceive->getTable(), 'gr_no', 'GR-');
             $goodreceive->save();
             $gr_id = $goodreceive->id;
 
@@ -534,14 +534,7 @@ class GoodController extends Controller
 
         $goodreceive = GoodReceive::find($gr_id);
 
-        $grdate = date('ymd');
-        $code = '';
-        if ($gr_id / 10 < 1) $code = '000' . $gr_id;
-        else if ($gr_id / 100 < 1) $code = '00' . $gr_id;
-        else if ($gr_id / 1000 < 1) $code = '0' . $gr_id;
-        else $code = $gr_id;
-
-        $goodreceive->gr_no = 'GR-' . $grdate . $code;
+        $goodreceive->gr_no = Helper::getSerialNumber($goodreceive->getTable(), 'gr_no', 'GR-');
         $goodreceive->sup_id = $supplier;
         $goodreceive->remarks = $remarks;
         $goodreceive->status = $status;

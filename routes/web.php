@@ -9,6 +9,7 @@ use App\Exports\ItemsExport;
 use App\Http\Controllers\ReportController;;
 
 use App\Exports\DeliveryReportsExport;
+use App\Helpers\Helper;
 use App\Http\Controllers\AdvanceUiController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Auth\LoginController;
@@ -36,6 +37,7 @@ use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserProfileController;
+use App\Models\GoodReceive;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +55,9 @@ use Maatwebsite\Excel\Facades\Excel;
 |
  */
 
+Route::get('/code', function () {
+    return Helper::getSerialNumber((new GoodReceive)->getTable(), 'gr_no', "GR-");
+});
 Route::get('/clean-data', 'SalesController@CleanData');
 
 // Dashboard Route
@@ -203,7 +208,7 @@ Route::prefix('report')->group(function () {
 
 // Good Receive Route
 Route::get('/current-gr', [GoodController::class, 'goodreceiverList']);
-Route::get('/new-gr/{id}', [GoodController::class, 'goodreceiverCreate']);
+Route::get('/new-gr/{id?}', [GoodController::class, 'goodreceiverCreate']);
 Route::get('/update-good-receive-record/{id}', [GoodController::class, 'goodreceiverUpdate']);
 Route::get('/gr-history/{status}', [GoodController::class, 'goodreceiverReport']);
 Route::post('/new-gr', [GoodController::class, 'createGoodsReceive']);

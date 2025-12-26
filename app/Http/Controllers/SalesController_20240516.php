@@ -17,6 +17,7 @@ use Mail;
 use Artisan;
 use PDF;
 use App\Exports\SalesOrderReportsExport;
+use App\Helpers\Helper;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\InternalCompany;
 use App\Models\ExternalCompany;
@@ -169,7 +170,6 @@ class SalesController extends Controller
         $salesorder->dn_id = 0;
         $salesorder->extuser_id = Auth::id();
         $salesorder->status = 0;
-        $nodate = date('ymd');
         $salesorder->cc_id = $costcentre;
         $salesorder->remarks = $remarks;
         $salesorder->appruser_id = $approver;
@@ -181,13 +181,7 @@ class SalesController extends Controller
 
         if ($salesorder->save()) {
             $so_id = $salesorder->id;
-            $code = '';
-            if ($so_id / 10 < 1) $code = '000' . $so_id;
-            else if ($so_id / 100 < 1) $code = '00' . $so_id;
-            else if ($so_id / 1000 < 1) $code = '0' . $so_id;
-            else $code = $so_id;
-
-            $salesorder->no = 'CS-SO-' . $nodate . $code;
+            $salesorder->no = Helper::getSerialNumber($salesorder->getTable(), 'no', 'CS-SO-');
             $salesorder->save();
             $items = $request->items;
             $dn_id = $salesorder->dn_id;
@@ -684,15 +678,8 @@ class SalesController extends Controller
 
         $salesorder = SalesOrder::find($so_id);
 
+        $salesorder->no = Helper::getSerialNumber($salesorder->getTable(), 'no', 'CS-SO-');
 
-        $nodate = date('Ymd');
-        $code = '';
-        if ($so_id / 10 < 1) $code = '000' . $so_id;
-        else if ($so_id / 100 < 1) $code = '00' . $so_id;
-        else if ($so_id / 1000 < 1) $code = '0' . $so_id;
-        else $code = $so_id;
-
-        $salesorder->no = 'CS-SO-' . $nodate . $code;
         $salesorder->cc_id = $costcentre;
         $salesorder->remarks = $remarks;
         $salesorder->appruser_id = $approver;
