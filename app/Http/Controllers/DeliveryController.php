@@ -37,7 +37,7 @@ class DeliveryController extends Controller
 
     public function deliverynoteList()
     {
-        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Delivery Note"], ['name' => "Current Delivery Note List"]];
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Delivery Note"], ['name' => "Current DN"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 
@@ -173,7 +173,7 @@ class DeliveryController extends Controller
             }
         }
 
-        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Delivery Note"], ['name' => "Delivery Note Report"]];
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Delivery Note"], ['name' => "DN History"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 

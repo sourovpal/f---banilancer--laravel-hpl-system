@@ -35,7 +35,7 @@ class CategoryController extends Controller
 
     public function categoryCreate()
     {
-        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Category & Item"], ['name' => "Create Category Record"]];
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Category & Item"], ['name' => "New Category"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 

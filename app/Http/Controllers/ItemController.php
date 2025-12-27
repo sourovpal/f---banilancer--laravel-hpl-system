@@ -49,7 +49,7 @@ class ItemController extends Controller
 
     public function itemCreate()
     {
-        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Category & Item"], ['name' => "Create Item Record"]];
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Category & Item"], ['name' => "New Item"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
         $categories = Category::orderBy('name', 'ASC')->get();
@@ -80,7 +80,7 @@ class ItemController extends Controller
 
     public function itemtransactionReport()
     {
-        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Category & Item"], ['name' => "Item Transaction Report"]];
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Category & Item"], ['name' => "Item Transaction"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 
@@ -239,7 +239,8 @@ class ItemController extends Controller
         return redirect('/item-list');
     }
 
-    public function updateItemRemarks (Request $request){
+    public function updateItemRemarks(Request $request)
+    {
         $id = $request->id;
         $itemRemark = $request->itemRemark;
         $item = Item::find($id);

@@ -21,7 +21,7 @@ class CompanyInformationController extends Controller
 
     public function showInternalCompany()
     {
-        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Company Information"], ['name' => "Internal Company Information"]];
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Company Information"], ['name' => "Internal"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 
@@ -35,7 +35,7 @@ class CompanyInformationController extends Controller
 
     public function showExternalCompany()
     {
-        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Company Information"], ['name' => "Internal Company Information"]];
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Company Information"], ['name' => "External"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 

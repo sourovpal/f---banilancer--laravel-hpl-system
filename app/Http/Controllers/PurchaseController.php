@@ -32,7 +32,7 @@ class PurchaseController extends Controller
 
     public function purchaseorderList()
     {
-        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Purchase Order"], ['name' => "Current Purchase Order List"]];
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Purchase Order"], ['name' => "Current PO"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 
@@ -94,7 +94,7 @@ class PurchaseController extends Controller
 
     public function purchaseorderCreate($id = 0)
     {
-        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Purchase Order"], ['name' => "Create Purchase Order Record"]];
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Purchase Order"], ['name' => "New PO"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 
@@ -206,7 +206,7 @@ class PurchaseController extends Controller
 
     public function purchaseorderReport($status = "initial")
     {
-        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Purchase Order"], ['name' => "Purchase Order Report"]];
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Purchase Order"], ['name' => "PO History"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 

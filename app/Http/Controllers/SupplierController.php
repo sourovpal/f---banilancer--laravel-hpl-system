@@ -35,7 +35,7 @@ class SupplierController extends Controller
 
     public function supplierCreate()
     {
-        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Supplier"], ['name' => "Create Supplier Record"]];
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Supplier"], ['name' => "New Supplier"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 

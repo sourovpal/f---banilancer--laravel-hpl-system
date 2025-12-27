@@ -34,7 +34,7 @@ class GoodController extends Controller
 
     public function goodreceiverList()
     {
-        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Good Receiver"], ['name' => "Current Good Receiver List"]];
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Good Receiver"], ['name' => "Current GR"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 
@@ -96,7 +96,7 @@ class GoodController extends Controller
     public function goodreceiverCreate(Request $request, $id = 0)
     {
 
-        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Good Receiver"], ['name' => "Create Good Receiver Record"]];
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Good Receiver"], ['name' => "New GR"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 
@@ -267,7 +267,7 @@ class GoodController extends Controller
 
     public function goodreceiverReport($status = "initial")
     {
-        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Good Receiver"], ['name' => "Good Receiver Report"]];
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Good Receiver"], ['name' => "GR History"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 

@@ -33,7 +33,7 @@ class QuotationController extends Controller
 
     public function quotationList()
     {
-        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Small Order"], ['name' => "Current Small Order List"]];
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Small Order"], ['name' => "Current Quotation"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 
@@ -143,7 +143,7 @@ class QuotationController extends Controller
 
     public function quotationCreate($id = 0)
     {
-        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Small Order"], ['name' => "Create Small Order Record"]];
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Small Order"], ['name' => "New Quotation"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 
@@ -455,7 +455,7 @@ class QuotationController extends Controller
 
     public function quotationReport($status = "initial")
     {
-        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Small Order"], ['name' => "Small Order Report"]];
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Small Order"], ['name' => "Quotation Report"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 

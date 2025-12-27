@@ -37,7 +37,7 @@ class SalesController extends Controller
 
     public function salesorderList()
     {
-        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Sales Order"], ['name' => "Current Sales Order List"]];
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Order Information"], ['name' => "My Order"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 
@@ -129,7 +129,7 @@ class SalesController extends Controller
 
     public function salesorderCreate($id = 0)
     {
-        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Sales Order"], ['name' => "Create Sales Order Record"]];
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Order Information"], ['name' => "New Request"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 
@@ -449,7 +449,7 @@ class SalesController extends Controller
 
     public function salesorderReport($status = "initial")
     {
-        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Sales Order"], ['name' => "Sales Order Report"]];
+        $breadcrumbs = [['link' => "modern", 'name' => "Home"], ['link' => "javascript:void(0)", 'name' => "Order Information"], ['name' => "Order History"]];
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 
