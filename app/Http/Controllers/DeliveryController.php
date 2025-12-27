@@ -219,6 +219,7 @@ class DeliveryController extends Controller
             $deliverynotes = array();
             $j = 0;
             foreach ($deliverynotes_result as $deliverynotes_item) {
+
                 $deliverynotes[$j]['id'] = $deliverynotes_item->id;
                 $deliverynotes[$j]['note_no'] = $deliverynotes_item->note_no;
                 $deliverynotes[$j]['user'] = $deliverynotes_item->user;
@@ -274,7 +275,7 @@ class DeliveryController extends Controller
                 $deliverynotereport->approver = $deliverynotes_item->approver;
                 $deliverynotereport->approve_date = $deliverynotes_item->approve_date;
                 $deliverynotereport->rep_code = auth()->user()->id . '_' . date('Ymd');
-
+                echo $deliverynotes_item->request_qty . ",\n";
                 $deliverynotereport->save();
 
                 $deliverynotes[$j]['rep_id'] = $deliverynotereport->id;

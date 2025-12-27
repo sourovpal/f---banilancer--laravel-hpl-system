@@ -2,7 +2,7 @@
 @extends('layouts.contentLayoutMaster')
 
 {{-- page title --}}
-@section('title','Create Supplier Record')
+@section('title','New Supplier')
 
 {{-- vendors styles --}}
 @section('vendor-style')
@@ -28,7 +28,7 @@
           <div class="col s12" id="account">
             <!-- users edit media object start -->
             <div class="media display-flex align-items-center mb-2">
-              <h5 class="media-heading mt-0">Supplier Info</h5>
+              <h5 class="media-heading mt-0">New Supplier</h5>
             </div>
             <!-- users edit media object ends -->
             <!-- users edit account form start -->

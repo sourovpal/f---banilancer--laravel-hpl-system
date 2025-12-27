@@ -9,14 +9,14 @@ use App\Models\ExternalCompany;
 
 class CategoryController extends Controller
 {
-private $internalcompany;
-private $externalcompany;
+    private $internalcompany;
+    private $externalcompany;
 
-public function __construct()
+    public function __construct()
     {
         $this->middleware('auth');
-$this -> internalcompany = InternalCompany::all();
-$this -> externalcompany = ExternalCompany::all();
+        $this->internalcompany = InternalCompany::all();
+        $this->externalcompany = ExternalCompany::all();
     }
 
     public function categoryList()
@@ -27,8 +27,8 @@ $this -> externalcompany = ExternalCompany::all();
 
         $categories = Category::orderBy('created_at', 'desc')->get();
 
-$internalCompany = $this -> internalcompany[0] -> name;
-$externalCompany = $this -> externalcompany[0] -> name;
+        $internalCompany = $this->internalcompany[0]->name;
+        $externalCompany = $this->externalcompany[0]->name;
 
         return view('pages.page-category-list', compact('pageConfigs', 'internalCompany', 'externalCompany', 'breadcrumbs', 'categories'));
     }
@@ -39,10 +39,10 @@ $externalCompany = $this -> externalcompany[0] -> name;
 
         $pageConfigs = ['pageHeader' => true, 'isFabButton' => true];
 
-$internalCompany = $this -> internalcompany[0] -> name;
-$externalCompany = $this -> externalcompany[0] -> name;
+        $internalCompany = $this->internalcompany[0]->name;
+        $externalCompany = $this->externalcompany[0]->name;
 
-return view('pages.page-category-create', compact('pageConfigs', 'internalCompany', 'externalCompany', 'breadcrumbs'));
+        return view('pages.page-category-create', compact('pageConfigs', 'internalCompany', 'externalCompany', 'breadcrumbs'));
     }
 
     public function categoryUpdate($id)
@@ -53,34 +53,36 @@ return view('pages.page-category-create', compact('pageConfigs', 'internalCompan
 
         $category = Category::find($id);
 
-$internalCompany = $this -> internalcompany[0] -> name;
-$externalCompany = $this -> externalcompany[0] -> name;
+        $internalCompany = $this->internalcompany[0]->name;
+        $externalCompany = $this->externalcompany[0]->name;
 
         return view('pages.page-category-update', compact('pageConfigs', 'internalCompany', 'externalCompany', 'breadcrumbs', 'category'));
     }
 
-    public function categoryRegister(Request $request) {
+    public function categoryRegister(Request $request)
+    {
         echo "sdf";
-        $categorycode = $request -> categorycode;
-        $categoryname = $request -> categoryname;
+        $categorycode = $request->categorycode;
+        $categoryname = $request->categoryname;
 
         $category = new Category();
-        $category -> code = $categorycode;
-        $category -> name = $categoryname;
-        $category -> save();
+        $category->code = $categorycode;
+        $category->name = $categoryname;
+        $category->save();
 
         return redirect('/category-list');
     }
 
-    public function categoryUpdateAction(Request $request) {
-        $id = $request -> id;
-        $categorycode = $request -> categorycode;
-        $categoryname = $request -> categoryname;
+    public function categoryUpdateAction(Request $request)
+    {
+        $id = $request->id;
+        $categorycode = $request->categorycode;
+        $categoryname = $request->categoryname;
 
         $category = Category::find($id);
-        $category -> code = $categorycode;
-        $category -> name = $categoryname;
-        $category -> save();
+        $category->code = $categorycode;
+        $category->name = $categoryname;
+        $category->save();
 
         return redirect('/category-list');
     }

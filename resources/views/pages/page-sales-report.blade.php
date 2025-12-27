@@ -24,7 +24,7 @@
         <div class="users-list-tabl">
             <div class="card">
                 <div class="card-content">
-                    <span class="card-title">Sales Order Report</span>
+                    <span class="card-title">Order History</span>
                     <!-- datatable start -->
                     @php
                         function shortenDescription($description, $maxLength = 10)

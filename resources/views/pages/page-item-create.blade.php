@@ -2,7 +2,7 @@
 @extends('layouts.contentLayoutMaster')
 
 {{-- page title --}}
-@section('title','Create New Item')
+@section('title','New Item')
 
 {{-- vendor styles --}}
 @section('vendor-style')
@@ -25,7 +25,7 @@
         <div class="col s12" id="account">
           <!-- users edit media object start -->
           <div class="media display-flex align-items-center mb-2">
-            <h5 class="media-heading mt-0">Item Info</h5>
+            <h5 class="media-heading mt-0">New Item</h5>
           </div>
           <!-- users edit media object ends -->
           <!-- users edit account form start -->

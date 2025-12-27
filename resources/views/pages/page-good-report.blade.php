@@ -2,7 +2,7 @@
 @extends('layouts.contentLayoutMaster')
 
 {{-- page title --}}
-@section('title','Good Receive Report')
+@section('title','GR History')
 
 {{-- vendors styles --}}
 @section('vendor-style')
@@ -24,7 +24,7 @@
   <div class="users-list-table">   
     <div class="card">
       <div class="card-content">
-        <span class="card-title">Good Receive List</span>
+        <span class="card-title">GR History</span>
         <!-- datatable start -->
         <div class="responsive-table">
           <table id="users-list-datatable" class="users-list-datatable table">

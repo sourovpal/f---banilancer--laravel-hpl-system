@@ -28,7 +28,7 @@
           <div class="col s12" id="account">
             <!-- users edit media object start -->
             <div class="media display-flex align-items-center mb-2">
-              <h5 class="media-heading mt-0">Category Info</h5>
+              <h5 class="media-heading mt-0">New Category</h5>
             </div>
             <!-- users edit media object ends -->
             <!-- users edit account form start -->

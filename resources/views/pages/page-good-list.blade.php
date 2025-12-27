@@ -2,7 +2,7 @@
 @extends('layouts.contentLayoutMaster')
 
 {{-- page title --}}
-@section('title','Current Good Receive List')
+@section('title','Current GR')
 
 {{-- vendors styles --}}
 @section('vendor-style')

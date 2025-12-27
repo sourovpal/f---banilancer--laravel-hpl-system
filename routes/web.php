@@ -56,7 +56,7 @@ use Maatwebsite\Excel\Facades\Excel;
  */
 
 Route::get('/code', function () {
-    return Helper::getSerialNumber((new GoodReceive)->getTable(), 'gr_no', "GR-");
+    return view('auth.login2');
 });
 Route::get('/clean-data', 'SalesController@CleanData');
 
@@ -210,7 +210,7 @@ Route::prefix('report')->group(function () {
 Route::get('/current-gr', [GoodController::class, 'goodreceiverList']);
 Route::get('/new-gr/{id?}', [GoodController::class, 'goodreceiverCreate']);
 Route::get('/update-good-receive-record/{id}', [GoodController::class, 'goodreceiverUpdate']);
-Route::get('/gr-history/{status}', [GoodController::class, 'goodreceiverReport']);
+Route::get('/gr-history/{status?}', [GoodController::class, 'goodreceiverReport']);
 Route::post('/new-gr', [GoodController::class, 'createGoodsReceive']);
 Route::get('/special-good-receive-handling/{id}', [GoodController::class, 'goodreceiveSpecialhandling']);
 Route::post('/saveGRItems', [GoodController::class, 'saveGRItems']);
