@@ -34,10 +34,10 @@ License: You must have a valid license purchased only from themeforest(the above
     <title> @yield('title') | HPL System</title>
     <link rel="apple-touch-icon" href="{{ asset('images/favicon/apple-touch-icon-152x152.png') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('images/favicon/favicon-32x32.png') }}">
-    <link href="https://db.onlinewebfonts.com/c/7c6661efce01eac269383bac79303c1b?family=Arial+Narrow" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/arial" rel="stylesheet">
     <style>
         * {
-            font-family: "Arial Narrow", sans-serif;
+            font-family: 'Arial', sans-serif;
         }
     </style>
     {{-- Include core + vendor Styles --}}
