@@ -220,7 +220,7 @@ class SalesController extends Controller
 
         if ($salesorder->save()) {
             $so_id = $salesorder->id;
-            $salesorder->no = Helper::getSerialNumber($salesorder->getTable(), 'no', 'CS-SO-');
+            $salesorder->no = Helper::getSerialNumber($salesorder->getTable(), 'no', 'SO-');
             $salesorder->save();
             $items = $request->items;
             $dn_id = $salesorder->dn_id;
@@ -798,7 +798,7 @@ class SalesController extends Controller
 
         $salesorder = SalesOrder::find($so_id);
 
-        $salesorder->no = Helper::getSerialNumber($salesorder->getTable(), 'no', 'CS-SO-');
+        $salesorder->no = Helper::getSerialNumber($salesorder->getTable(), 'no', 'SO-');
         $salesorder->cc_id = $costcentre;
         $salesorder->remarks = $remarks;
         $salesorder->appruser_id = $approver;

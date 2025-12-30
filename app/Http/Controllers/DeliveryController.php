@@ -692,7 +692,7 @@ class DeliveryController extends Controller
         $deliverynote->userext_id = $salesorder->extuser_id;
         $deliverynote->userint_id = auth()->user()->id;
         $deliverynote->status = 0;
-        $deliverynote->no = Helper::getSerialNumber($deliverynote->getTable(), 'no', 'CS-DN-');
+        $deliverynote->no = Helper::getSerialNumber($deliverynote->getTable(), 'no', 'DN-');
         $deliverynote->save();
 
 
@@ -719,7 +719,7 @@ class DeliveryController extends Controller
         $deliverynote->userext_id = $quotation->userext_id;
         $deliverynote->userint_id = auth()->user()->id;
         $deliverynote->status = 0;
-        $deliverynote->no = Helper::getSerialNumber($deliverynote->getTable(), 'no', 'CS-DN-');
+        $deliverynote->no = Helper::getSerialNumber($deliverynote->getTable(), 'no', 'DN-');
         $deliverynote->save();
 
         $quotation->status = 1; // waiting for deliver
