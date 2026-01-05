@@ -40,6 +40,7 @@ use App\Http\Controllers\UserProfileController;
 use App\Models\GoodReceive;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -56,7 +57,14 @@ use Maatwebsite\Excel\Facades\Excel;
  */
 
 Route::get('/code', function () {
-    return view('auth.login2');
+    return DB::table('good_receives')->get()->each(function ($item) {
+        DB::table('good_receives')
+            ->where('id', $item->id)
+            ->update([
+                // 'no' => str_replace('CS-DN-20', 'DN-', $item->no),
+                'gr_no' => str_replace('CS-GR-20', 'GR-', $item->gr_no),
+            ]);
+    });
 });
 Route::get('/clean-data', 'SalesController@CleanData');
 

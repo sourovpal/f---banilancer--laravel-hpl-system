@@ -275,7 +275,7 @@ class DeliveryController extends Controller
                 $deliverynotereport->approver = $deliverynotes_item->approver;
                 $deliverynotereport->approve_date = $deliverynotes_item->approve_date;
                 $deliverynotereport->rep_code = auth()->user()->id . '_' . date('Ymd');
-                echo $deliverynotes_item->request_qty . ",\n";
+                // echo $deliverynotes_item->request_qty . ",\n";
                 $deliverynotereport->save();
 
                 $deliverynotes[$j]['rep_id'] = $deliverynotereport->id;
@@ -408,7 +408,6 @@ class DeliveryController extends Controller
             $deliverynotes_new[$i]['deliverynoteitems'] = $deliverynoteitems;
             $i++;
         }
-
         return view('pages.page-delivery-report', compact('pageConfigs', 'internalCompany', 'externalCompany', 'breadcrumbs', 'deliverynotes_new', 'deliverynotes', 'costcenters', 'items', 'to', 'from'));
     }
 
